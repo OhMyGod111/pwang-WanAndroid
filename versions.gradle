@@ -1,0 +1,22 @@
+
+ext {
+
+    lib_versions = [
+
+            supportAnnotations: '27.0.2',
+    ]
+
+    android = [
+            compileSdkVersion: 28,
+            buildToolsVersion: "28.0.3",
+            applicationId    : "com.pwang.wanandroid",
+            minSdkVersion    : 21,
+            targetSdkVersion : 28,
+            versionCode      : 1,
+            versionName      : "1.0.0"
+    ]
+
+    dependencies = [
+            supportAnnotations: "com.android.support:support-annotations:${lib_versions.supportAnnotations}",
+    ]
+}
