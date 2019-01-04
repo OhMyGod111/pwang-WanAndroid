@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".feature.WelcomeActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/WelcomeAppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
