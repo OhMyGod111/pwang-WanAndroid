@@ -25,6 +25,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation project(':shimmer')
     implementation rootProject.ext.dependencies.appcompatV7
     implementation rootProject.ext.dependencies.constraint
     testImplementation 'junit:junit:4.12'
@@ -33,4 +34,8 @@ dependencies {
     implementation rootProject.ext.dependencies.okhttp3
     implementation rootProject.ext.dependencies.dagger
     implementation rootProject.ext.dependencies.retrofit
+    implementation rootProject.ext.dependencies.butterknife
+    annotationProcessor rootProject.ext.dependencies.butterkcompiler
+    implementation rootProject.ext.dependencies.rxjava
+    implementation rootProject.ext.dependencies.rxandroid
 }

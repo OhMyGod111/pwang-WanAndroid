@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">玩Android</string>
+    <string name="welcome_count_down">跳过(%s)</string>
 </resources>
