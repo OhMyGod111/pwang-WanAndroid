@@ -38,4 +38,5 @@ dependencies {
     annotationProcessor rootProject.ext.dependencies.butterkcompiler
     implementation rootProject.ext.dependencies.rxjava
     implementation rootProject.ext.dependencies.rxandroid
+    implementation rootProject.ext.dependencies.design
 }

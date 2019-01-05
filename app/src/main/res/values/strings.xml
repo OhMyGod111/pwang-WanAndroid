@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">玩Android</string>
     <string name="welcome_count_down">跳过(%s)</string>
+
+    <string name="nav_item_favorite">收藏</string>
+    <string name="nav_item_night_mode">夜间模式</string>
+    <string name="nav_item_setting">设置</string>
+    <string name="nav_item_about_me">关于我们</string>
+    <string name="nav_item_log_out">退出</string>
+    <string name="nav_header_nick">个人昵称</string>
+    <string name="nav_header_portrait">头像</string>
 </resources>

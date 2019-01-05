@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_favorite"
+        android:title="@string/nav_item_favorite"
+        android:icon="@drawable/ic_favorite_normal"/>
+
+    <item
+        android:id="@+id/nav_night_mode"
+        android:title="@string/nav_item_night_mode"
+        android:icon="@drawable/ic_night_mode"/>
+
+    <item
+        android:id="@+id/nav_settings"
+        android:title="@string/nav_item_setting"
+        android:icon="@drawable/ic_settings"/>
+
+    <item
+        android:id="@+id/nav_about_me"
+        android:title="@string/nav_item_about_me"
+        android:icon="@drawable/ic_about_me"/>
+
+    <item
+        android:id="@+id/nav_log_out"
+        android:title="@string/nav_item_log_out"
+        android:icon="@drawable/ic_log_out"/>
+</menu>
