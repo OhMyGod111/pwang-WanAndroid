@@ -9,4 +9,10 @@
     <string name="nav_item_log_out">退出</string>
     <string name="nav_header_nick">个人昵称</string>
     <string name="nav_header_portrait">头像</string>
+    <string name="bottom_home_page">首页</string>
+    <string name="bottom_knowledge_hierarchy">知识体系</string>
+    <string name="bottom_navigation">导航</string>
+    <string name="bottom_project">项目</string>
+    <string name="nav_open">打开</string>
+    <string name="nav_close">关闭</string>
 </resources>
