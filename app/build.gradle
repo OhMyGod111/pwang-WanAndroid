@@ -31,12 +31,22 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation rootProject.ext.dependencies.okhttp3
+
+    //dagger2
     implementation rootProject.ext.dependencies.dagger
+    annotationProcessor rootProject.ext.dependencies.dagger_compiler
+    implementation  rootProject.ext.dependencies.dagger_android
+    implementation  rootProject.ext.dependencies.dagger_android_support// if you use the support libraries
+    annotationProcessor rootProject.ext.dependencies.dagger_android_processor
+
     implementation rootProject.ext.dependencies.retrofit
+    implementation rootProject.ext.dependencies.okhttp3
+
     implementation rootProject.ext.dependencies.butterknife
     annotationProcessor rootProject.ext.dependencies.butterkcompiler
+
     implementation rootProject.ext.dependencies.rxjava
     implementation rootProject.ext.dependencies.rxandroid
+
     implementation rootProject.ext.dependencies.design
 }

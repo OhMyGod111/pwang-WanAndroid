@@ -1,6 +1,9 @@
 package com.pwang.wanandroid;
 
-import android.app.Application;
+import com.pwang.wanandroid.di.component.DaggerAppComponent;
+
+import dagger.android.AndroidInjector;
+import dagger.android.support.DaggerApplication;
 
 /**
  * <pre>
@@ -11,10 +14,15 @@ import android.app.Application;
  *     version: 1.0
  * </pre>
  */
-public class WanApplication extends Application {
+public class WanApplication extends DaggerApplication {
 
     @Override
     public void onCreate() {
         super.onCreate();
+    }
+
+    @Override
+    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+        return DaggerAppComponent.builder().application(this).builder();
     }
 }

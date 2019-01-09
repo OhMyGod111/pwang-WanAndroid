@@ -11,7 +11,7 @@ package com.pwang.wanandroid.base;
  */
 public interface BasePresenter <T> {
 
-    void subscribe();
+    void takeView(T view);
 
-    void unSubscribe();
+    void dropView();
 }
