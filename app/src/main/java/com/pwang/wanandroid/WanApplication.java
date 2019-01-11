@@ -38,13 +38,15 @@ public class WanApplication extends DaggerApplication {
     }
 
     private void setStrictMode() {
+        // thread 策略
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                 .detectAll()
                 .penaltyLog()
                 .build());
-
+        // VM 策略
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
                 .detectLeakedSqlLiteObjects()
+                .detectActivityLeaks()
                 .penaltyLog()
                 .penaltyDeath()
                 .build());
