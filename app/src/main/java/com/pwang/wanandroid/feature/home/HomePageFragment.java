@@ -21,15 +21,13 @@ import butterknife.BindView;
  * </pre>
  */
 @ActivityScoped
-public class HomePageFragment extends BaseFragment <HomePageContract.Presenter> implements HomePageContract.View {
+public class HomePageFragment extends BaseFragment <HomePagePresenter> implements HomePageContract.View {
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
-    @Inject
-    HomePagePresenter mPresenter;
 
     @Inject
     public HomePageFragment() {

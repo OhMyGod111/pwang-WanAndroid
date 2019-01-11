@@ -49,4 +49,6 @@ dependencies {
     implementation rootProject.ext.dependencies.rxandroid
 
     implementation rootProject.ext.dependencies.design
+
+    implementation rootProject.ext.dependencies.logger
 }

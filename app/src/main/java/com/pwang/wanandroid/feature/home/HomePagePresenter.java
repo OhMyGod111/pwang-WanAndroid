@@ -1,5 +1,6 @@
 package com.pwang.wanandroid.feature.home;
 
+import com.orhanobut.logger.Logger;
 import com.pwang.wanandroid.di.scoped.ActivityScoped;
 
 import javax.inject.Inject;
@@ -26,10 +27,11 @@ public class HomePagePresenter implements HomePageContract.Presenter {
     public void takeView(HomePageContract.View view) {
         this.mView = view;
 
+        Logger.d("takeView");
     }
 
     @Override
     public void dropView() {
-
+        Logger.d("dropView");
     }
 }
