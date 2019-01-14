@@ -48,8 +48,6 @@ public abstract class BaseFragment <T extends BasePresenter> extends DaggerFragm
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView();
-
-        // TODO: 2019/1/10 待修复的问题
         if (mPresenter != null) mPresenter.takeView(this);
     }
 

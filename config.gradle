@@ -13,6 +13,7 @@ ext {
             rxandroid         : '2.1.0',
             supportVersion    : '28.0.0',
             logger            : '2.2.0',
+            gson              : '2.8.5',
     ]
 
     android = [
@@ -42,14 +43,22 @@ ext {
             dagger_android_support    : "com.google.dagger:dagger-android-support:${lib_versions.dagger}",
             dagger_android_processor    : "com.google.dagger:dagger-android-processor:${lib_versions.dagger}",
 
+            //retrofit
             retrofit          : "com.squareup.retrofit2:retrofit:${lib_versions.retrofit}",
+            converter_gson    : "com.squareup.retrofit2:converter-gson:${lib_versions.retrofit}",
+            adapter_rxjava2   : "com.squareup.retrofit2:adapter-rxjava2:${lib_versions.retrofit}",
+
             okhttp3           : "com.squareup.okhttp3:okhttp:${lib_versions.okhttp3}",
+
+            gson              : "com.google.code.gson:gson:${lib_versions.gson}",
+
+            rxjava            : "io.reactivex.rxjava2:rxjava:${lib_versions.rxjava}",
+            rxandroid         : "io.reactivex.rxjava2:rxandroid:${lib_versions.rxandroid}",
 
             butterknife       : "com.jakewharton:butterknife:${lib_versions.butterknife}",
             butterkcompiler   : "com.jakewharton:butterknife-compiler:${lib_versions.butterkcompiler}",
 
-            rxjava            : "io.reactivex.rxjava2:rxjava:${lib_versions.rxjava}",
-            rxandroid         : "io.reactivex.rxjava2:rxandroid:${lib_versions.rxandroid}",
+
 
             logger            : "com.orhanobut:logger:${lib_versions.logger}"
     ]
