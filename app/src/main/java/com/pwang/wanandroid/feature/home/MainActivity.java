@@ -1,19 +1,28 @@
 package com.pwang.wanandroid.feature.home;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.pwang.wanandroid.R;
 import com.pwang.wanandroid.base.BaseActivity;
 import com.pwang.wanandroid.util.ActivityUtils;
+
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -60,7 +69,6 @@ public class MainActivity extends BaseActivity {
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
 
-
         if (navMenu != null) {
             setupDrawerContent(navMenu);
         }
@@ -74,6 +82,27 @@ public class MainActivity extends BaseActivity {
         if (homePageFragment == null) {
             homePageFragment = mHomePageFragment;
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), homePageFragment, R.id.fl_container);
+        }
+
+        setupToolbar();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_search_item, menu);
+        MenuItem item = menu.findItem(R.id.item_search);
+        SearchView view = (SearchView) item.getActionView();
+        view.setQueryHint("搜索更多内容");
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @SuppressLint("NewApi")
+    private void setupToolbar() {
+        View titleView = toolbar.getChildAt(0);
+        if (Objects.nonNull(titleView) && titleView instanceof TextView){
+            ViewGroup.LayoutParams layoutParams = titleView.getLayoutParams();
+            layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+            ((TextView) titleView).setGravity(Gravity.CENTER_HORIZONTAL);
         }
     }
 
