@@ -9,7 +9,7 @@ package com.pwang.wanandroid.data.network.entity;
  *     version: 1.0
  * </pre>
  */
-public class BaseResult <T> {
+public class BaseResponse<T> {
 
     private T data;
     private int errorCode;

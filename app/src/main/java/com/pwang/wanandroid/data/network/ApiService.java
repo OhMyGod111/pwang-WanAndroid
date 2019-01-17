@@ -2,7 +2,7 @@ package com.pwang.wanandroid.data.network;
 
 import com.pwang.wanandroid.data.network.entity.ArticleList;
 import com.pwang.wanandroid.data.network.entity.Banner;
-import com.pwang.wanandroid.data.network.entity.BaseResult;
+import com.pwang.wanandroid.data.network.entity.BaseResponse;
 import com.pwang.wanandroid.data.network.entity.Knowledge;
 import com.pwang.wanandroid.data.network.entity.Navigation;
 
@@ -32,7 +32,7 @@ public interface ApiService {
      * @return
      */
     @GET("/article/list/{num}/json")
-    Observable<BaseResult<ArticleList>> getHomePageArticleList(@Path("num")int num);
+    Observable<BaseResponse<ArticleList>> getHomePageArticleList(@Path("num")int num);
 
     /**
      *  首页banner图
@@ -40,7 +40,7 @@ public interface ApiService {
      * @return
      */
     @GET("/banner/json")
-    Observable<BaseResult<Banner>> getHomePageBanner();
+    Observable<BaseResponse<Banner>> getHomePageBanner();
 
     /**
      * 知识体系目录 （一级目录）
@@ -48,7 +48,7 @@ public interface ApiService {
      * @return
      */
     @GET("/tree/json")
-    Observable<BaseResult<Knowledge>> getKnowledgeHierarchy();
+    Observable<BaseResponse<Knowledge>> getKnowledgeHierarchy();
 
     /**
      * 知识体系目录下的文章 （二级目录）
@@ -56,7 +56,7 @@ public interface ApiService {
      * @return
      */
     @GET("/article/list/{page}/json?cid={cid}")
-    Observable<BaseResult<ArticleList>> getSecondLevelKnowledgeHierarchy(@Path("page")int page, @Query("cid") int cid);
+    Observable<BaseResponse<ArticleList>> getSecondLevelKnowledgeHierarchy(@Path("page")int page, @Query("cid") int cid);
 
     /**
      * 导航数据
@@ -64,7 +64,7 @@ public interface ApiService {
      * @return
      */
     @GET("/navi/json")
-    Observable<BaseResult<Navigation>> getNavigationArticle();
+    Observable<BaseResponse<Navigation>> getNavigationArticle();
 
     /**
      * 项目分类
@@ -72,7 +72,7 @@ public interface ApiService {
      * @return
      */
     @GET("/project/tree/json")
-    Observable<BaseResult<Knowledge.Children>> getProjectClassify();
+    Observable<BaseResponse<Knowledge.Children>> getProjectClassify();
 
     /**
      *  项目分类列表数据
@@ -80,7 +80,7 @@ public interface ApiService {
      * @return
      */
     @GET("/project/list/{page}/json?cid={cid}")
-    Observable<BaseResult<ArticleList>> getProjectClassifyList(@Path("page")int page, @Query("cid")int cid);
+    Observable<BaseResponse<ArticleList>> getProjectClassifyList(@Path("page")int page, @Query("cid")int cid);
 
     /**
      * 搜索热词
@@ -88,7 +88,7 @@ public interface ApiService {
      * @return
      */
     @GET("/hotkey/json")
-    Observable<BaseResult<ArticleList>> getHotkey();
+    Observable<BaseResponse<ArticleList>> getHotkey();
 
     /**
      * 搜索
@@ -97,7 +97,7 @@ public interface ApiService {
      */
     @POST("/article/query/{page}/json")
     @FormUrlEncoded
-    Observable<BaseResult<ArticleList>> getSearchList(@Path("page")int page, @Field("k")String key);
+    Observable<BaseResponse<ArticleList>> getSearchList(@Path("page")int page, @Field("k")String key);
 
 
 }
