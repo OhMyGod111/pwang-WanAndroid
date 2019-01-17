@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.pwang.wanandroid.R;
@@ -47,7 +48,15 @@ public class MainActivity extends BaseActivity {
         setSupportActionBar(toolbar);
 
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(MainActivity.this, drawerLayout,
-                toolbar, R.string.nav_open, R.string.nav_close);
+                toolbar, R.string.nav_open, R.string.nav_close) {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                //滑动过程中不断回调
+                super.onDrawerSlide(drawerView, slideOffset);
+                View content = drawerLayout.getChildAt(0);
+                content.setTranslationX(drawerView.getMeasuredWidth() * slideOffset);//slideOffset:0~1
+            }
+        };
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
 
