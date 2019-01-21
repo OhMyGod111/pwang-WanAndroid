@@ -1,8 +1,11 @@
 package com.pwang.wanandroid.di.component;
 
 import com.pwang.wanandroid.WanApplication;
+import com.pwang.wanandroid.data.DataManager;
 import com.pwang.wanandroid.di.module.ActivityBindingModule;
 import com.pwang.wanandroid.di.module.ApplicationModule;
+import com.pwang.wanandroid.di.module.DataManagerModule;
+import com.pwang.wanandroid.di.module.HttpModule;
 
 import javax.inject.Singleton;
 
@@ -21,9 +24,14 @@ import dagger.android.support.AndroidSupportInjectionModule;
  * </pre>
  */
 @Singleton
-@Component(modules = {ApplicationModule.class, ActivityBindingModule.class,
-        AndroidSupportInjectionModule.class})
+@Component(modules = {ApplicationModule.class,
+        ActivityBindingModule.class,
+        AndroidSupportInjectionModule.class,
+        HttpModule.class,
+        DataManagerModule.class})
 public interface AppComponent extends AndroidInjector<WanApplication> {
+
+    DataManager getDataManager();
 
     @Component.Builder
     interface Builder{

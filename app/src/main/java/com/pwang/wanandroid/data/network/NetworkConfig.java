@@ -9,7 +9,17 @@ package com.pwang.wanandroid.data.network;
  *     version: 1.0
  * </pre>
  */
-public final class NetConfig {
+public final class NetworkConfig {
+
+    private NetworkConfig() {
+    }
 
     public static String HOST = "http://www.wanandroid.com";
+
+
+    public static final long CONNECT_TIMEOUT= 10L;
+
+    public static final long READ_TIMEOUT= 20L;
+
+    public static final long WRITE_TIMEOUT= 20L;
 }

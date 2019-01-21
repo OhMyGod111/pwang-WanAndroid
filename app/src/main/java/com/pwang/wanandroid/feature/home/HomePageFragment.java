@@ -5,7 +5,10 @@ import android.support.v7.widget.RecyclerView;
 
 import com.pwang.wanandroid.R;
 import com.pwang.wanandroid.base.BaseFragment;
+import com.pwang.wanandroid.data.network.entity.ArticleDetail;
 import com.pwang.wanandroid.di.scoped.ActivityScoped;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -45,6 +48,11 @@ public class HomePageFragment extends BaseFragment <HomePagePresenter> implement
 
     @Override
     public void showHintMsg(String msg) {
+
+    }
+
+    @Override
+    public void showArticles(List<ArticleDetail> details) {
 
     }
 

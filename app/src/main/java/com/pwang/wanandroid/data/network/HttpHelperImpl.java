@@ -1,6 +1,5 @@
-package com.pwang.wanandroid.data;
+package com.pwang.wanandroid.data.network;
 
-import com.pwang.wanandroid.data.network.HttpHelper;
 import com.pwang.wanandroid.data.network.entity.ArticleList;
 import com.pwang.wanandroid.data.network.entity.Banner;
 import com.pwang.wanandroid.data.network.entity.BaseResponse;
@@ -8,7 +7,6 @@ import com.pwang.wanandroid.data.network.entity.BaseResponse;
 import java.util.Objects;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import io.reactivex.Observable;
 
@@ -16,29 +14,29 @@ import io.reactivex.Observable;
  * <pre>
  *     author : Wang Pan
  *     e-mail : 501098462@qq.con
- *     time   : 2019/01/13
+ *     time   : 2019/01/20
  *     desc   :
  *     version: 1.0
  * </pre>
  */
-@Singleton
-public class DataManager implements HttpHelper {
 
-    private HttpHelper mHttpHelper;
+public class HttpHelperImpl implements HttpHelper {
+
+    private ApiService apiService;
 
     @Inject
-    public DataManager(HttpHelper httpHelper) {
-        Objects.requireNonNull(httpHelper,"httpHelper cannot be null ");
-        this.mHttpHelper = httpHelper;
+    public HttpHelperImpl(ApiService apiService) {
+        Objects.requireNonNull(apiService, "apiService cannot be null");
+        this.apiService = apiService;
     }
 
     @Override
     public Observable<BaseResponse<ArticleList>> getHomePageArticleList(int page) {
-        return mHttpHelper.getHomePageArticleList(page);
+        return apiService.getHomePageArticleList(page);
     }
 
     @Override
     public Observable<BaseResponse<Banner>> getHomePageBanner() {
-        return mHttpHelper.getHomePageBanner();
+        return apiService.getHomePageBanner();
     }
 }

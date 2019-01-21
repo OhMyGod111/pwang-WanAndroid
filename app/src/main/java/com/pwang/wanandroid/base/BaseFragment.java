@@ -63,7 +63,12 @@ public abstract class BaseFragment <T extends BasePresenter> extends DaggerFragm
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (mPresenter != null) mPresenter.dropView();
+
+        if (mPresenter != null) {
+            mPresenter.dropView();
+            mPresenter = null;
+        }
+
         if (unbinder != null && unbinder != Unbinder.EMPTY) {
             unbinder.unbind();
             unbinder = null;

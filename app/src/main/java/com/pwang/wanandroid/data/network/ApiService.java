@@ -28,11 +28,11 @@ public interface ApiService {
     /**
      *  首页文章列表
      *  http://www.wanandroid.com/article/list/0/json
-     * @param num
+     * @param page 页码
      * @return
      */
-    @GET("/article/list/{num}/json")
-    Observable<BaseResponse<ArticleList>> getHomePageArticleList(@Path("num")int num);
+    @GET("/article/list/{page}/json")
+    Observable<BaseResponse<ArticleList>> getHomePageArticleList(@Path("page")int page);
 
     /**
      *  首页banner图
