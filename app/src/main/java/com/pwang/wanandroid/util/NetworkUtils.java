@@ -1,5 +1,9 @@
 package com.pwang.wanandroid.util;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 /**
  * <pre>
  *     author : Wang Pan
@@ -14,7 +18,14 @@ public final class NetworkUtils {
     private NetworkUtils() {
     }
 
-    public static boolean isNetworkConnected() {
-        return true;
+    public static boolean isNetConnected() {
+        ConnectivityManager cm = (ConnectivityManager) Utils.getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm != null) {
+            NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+            if (networkInfo != null) {
+                return true;
+            }
+        }
+        return false;
     }
 }

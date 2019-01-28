@@ -7,6 +7,7 @@ import com.orhanobut.logger.DiskLogAdapter;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
 import com.pwang.wanandroid.di.component.DaggerAppComponent;
+import com.pwang.wanandroid.util.Utils;
 
 import dagger.android.AndroidInjector;
 import dagger.android.support.DaggerApplication;
@@ -29,6 +30,7 @@ public class WanApplication extends DaggerApplication {
         }
         super.onCreate();
 
+        // 初始化操作
         init();
     }
 
@@ -54,6 +56,8 @@ public class WanApplication extends DaggerApplication {
 
     private void init() {
         initLogger();
+
+        Utils.init(WanApplication.this);
     }
 
     private void initLogger() {

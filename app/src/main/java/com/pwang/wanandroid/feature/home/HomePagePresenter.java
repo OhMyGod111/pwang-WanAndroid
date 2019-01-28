@@ -6,6 +6,7 @@ import com.orhanobut.logger.Logger;
 import com.pwang.wanandroid.data.DataManager;
 import com.pwang.wanandroid.data.network.entity.ArticleDetail;
 import com.pwang.wanandroid.data.network.entity.ArticleList;
+import com.pwang.wanandroid.data.network.entity.Banner;
 import com.pwang.wanandroid.data.network.entity.BaseResponse;
 import com.pwang.wanandroid.di.scoped.ActivityScoped;
 import com.pwang.wanandroid.util.RxUtils;
@@ -16,8 +17,7 @@ import java.util.Objects;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.functions.Consumer;
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * <pre>
@@ -33,6 +33,10 @@ public class HomePagePresenter implements HomePageContract.Presenter {
 
     private HomePageContract.View mView;
     private DataManager dataManager;
+    private CompositeDisposable mCompositeDisposable;
+
+    private int mCurrentPage;
+    private boolean mFirstLoad = true;
 
     @Inject
     HomePagePresenter(DataManager dataManager) {
@@ -44,10 +48,35 @@ public class HomePagePresenter implements HomePageContract.Presenter {
     @Override
     public void takeView(HomePageContract.View view) {
         this.mView = view;
-
         Logger.d("takeView");
+    }
 
-        Observable<BaseResponse<ArticleList>> homePageArticleList = dataManager.getHomePageArticleList(0);
+    @Override
+    public void dropView() {
+        Logger.d("dropView");
+    }
+
+    @Override
+    public void loadHomePageData(boolean forceUpdate) {
+        loadHomePageData(forceUpdate || mFirstLoad, true);
+        mFirstLoad = false;
+    }
+
+    private void loadHomePageData(boolean forceUpdate, boolean showLoadingUI) {
+        if (showLoadingUI) {
+            if (mView != null) {
+                mView.setLoadingIndicator(true);
+            }
+        }
+
+        // 强制更新，用户手动操作的
+        if (forceUpdate){
+            mCurrentPage ++;
+        }
+
+        // 处理数据
+        Observable<BaseResponse<Banner>> homePageBanner = dataManager.getHomePageBanner();
+        Observable<BaseResponse<ArticleList>> homePageArticleList = dataManager.getHomePageArticleList(mCurrentPage);
         homePageArticleList
                 .compose(RxUtils.schedulersTransformer())
                 .subscribe(articleListBaseResponse -> {
@@ -56,11 +85,5 @@ public class HomePagePresenter implements HomePageContract.Presenter {
                         Logger.d("Title:" + data.getTitle());
                     }
                 });
-
-    }
-
-    @Override
-    public void dropView() {
-        Logger.d("dropView");
     }
 }

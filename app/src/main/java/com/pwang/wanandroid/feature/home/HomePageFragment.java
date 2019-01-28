@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import com.pwang.wanandroid.R;
 import com.pwang.wanandroid.base.BaseFragment;
 import com.pwang.wanandroid.data.network.entity.ArticleDetail;
+import com.pwang.wanandroid.data.network.entity.Banner;
 import com.pwang.wanandroid.di.scoped.ActivityScoped;
 
 import java.util.List;
@@ -37,13 +38,8 @@ public class HomePageFragment extends BaseFragment <HomePagePresenter> implement
     }
 
     @Override
-    public void showLoading() {
-        mSwipeRefreshLayout.setRefreshing(true);
-    }
-
-    @Override
-    public void hideLoading() {
-        mSwipeRefreshLayout.setRefreshing(false);
+    public void setLoadingIndicator(boolean active) {
+        mSwipeRefreshLayout.setRefreshing(active);
     }
 
     @Override
@@ -53,6 +49,11 @@ public class HomePageFragment extends BaseFragment <HomePagePresenter> implement
 
     @Override
     public void showArticles(List<ArticleDetail> details) {
+
+    }
+
+    @Override
+    public void showBanners(List<Banner> banners) {
 
     }
 
