@@ -18,6 +18,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 /**
  * <pre>
@@ -49,6 +50,10 @@ public class HomePagePresenter implements HomePageContract.Presenter {
     public void takeView(HomePageContract.View view) {
         this.mView = view;
         Logger.d("takeView");
+
+        mCompositeDisposable = new CompositeDisposable();
+
+        loadHomePageData(false);
     }
 
     @Override
@@ -77,7 +82,7 @@ public class HomePagePresenter implements HomePageContract.Presenter {
         // 处理数据
         Observable<BaseResponse<Banner>> homePageBanner = dataManager.getHomePageBanner();
         Observable<BaseResponse<ArticleList>> homePageArticleList = dataManager.getHomePageArticleList(mCurrentPage);
-        homePageArticleList
+        Disposable subscribe = homePageArticleList
                 .compose(RxUtils.schedulersTransformer())
                 .subscribe(articleListBaseResponse -> {
                     List<ArticleDetail> datas = articleListBaseResponse.getData().getDatas();
@@ -85,5 +90,7 @@ public class HomePagePresenter implements HomePageContract.Presenter {
                         Logger.d("Title:" + data.getTitle());
                     }
                 });
+        mCompositeDisposable.add(subscribe);
+        mCompositeDisposable.add(subscribe);
     }
 }

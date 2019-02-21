@@ -22,13 +22,13 @@ public class CacheInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
-        if (!NetworkUtils.isNetworkConnected()) {
+        if (!NetworkUtils.isNetConnected()) {
             request = request.newBuilder()
                     .cacheControl(CacheControl.FORCE_CACHE)
                     .build();
         }
         Response response = chain.proceed(request);
-        if (NetworkUtils.isNetworkConnected()) {
+        if (NetworkUtils.isNetConnected()) {
             int maxAge = 0;
             // 有网络时, 不缓存, 最大保存时长为0
             response.newBuilder()

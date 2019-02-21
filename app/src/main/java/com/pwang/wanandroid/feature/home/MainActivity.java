@@ -92,7 +92,7 @@ public class MainActivity extends BaseActivity {
         getMenuInflater().inflate(R.menu.toolbar_search_item, menu);
         MenuItem item = menu.findItem(R.id.item_search);
         SearchView view = (SearchView) item.getActionView();
-        view.setQueryHint("搜索更多内容");
+        view.setQueryHint(getString(R.string.main_toolbar_search));
         return super.onCreateOptionsMenu(menu);
     }
 

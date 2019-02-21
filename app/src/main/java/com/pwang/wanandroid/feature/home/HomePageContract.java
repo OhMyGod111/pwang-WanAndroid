@@ -27,7 +27,7 @@ public interface HomePageContract {
         void setLoadingIndicator(boolean active);
 
         /**
-         *  现实提示信息
+         *  显示提示信息
          * @param msg
          */
         void showHintMsg(String msg);

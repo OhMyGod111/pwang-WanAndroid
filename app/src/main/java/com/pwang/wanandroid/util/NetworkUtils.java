@@ -22,9 +22,7 @@ public final class NetworkUtils {
         ConnectivityManager cm = (ConnectivityManager) Utils.getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         if (cm != null) {
             NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-            if (networkInfo != null) {
-                return true;
-            }
+            return networkInfo != null;
         }
         return false;
     }

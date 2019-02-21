@@ -10,7 +10,7 @@ import java.util.Objects;
  *     author : Wang Pan
  *     e-mail : 501098462@qq.con
  *     time   : 2019/01/28
- *     desc   :
+ *     desc   : 统一Util配置
  *     version: 1.0
  * </pre>
  */
