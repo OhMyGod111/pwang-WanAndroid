@@ -1,6 +1,7 @@
 package com.pwang.wanandroid.feature.home;
 
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.pwang.wanandroid.R;
@@ -32,7 +33,6 @@ public class HomePageFragment extends BaseFragment <HomePagePresenter> implement
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
-
     @Inject
     public HomePageFragment() {
     }
@@ -62,6 +62,10 @@ public class HomePageFragment extends BaseFragment <HomePagePresenter> implement
         mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary),
                 getResources().getColor(R.color.colorPrimary),
                 getResources().getColor(R.color.colorPrimary));
+
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext(), LinearLayoutManager.VERTICAL, false));
+        mRecyclerView.setAdapter(null);
     }
 
     @Override

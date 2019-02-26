@@ -14,6 +14,7 @@ ext {
             supportVersion    : '28.0.0',
             logger            : '2.2.0',
             gson              : '2.8.5',
+            banner            : '1.4.10',
     ]
 
     android = [
@@ -58,8 +59,8 @@ ext {
             butterknife       : "com.jakewharton:butterknife:${lib_versions.butterknife}",
             butterkcompiler   : "com.jakewharton:butterknife-compiler:${lib_versions.butterkcompiler}",
 
+            logger            : "com.orhanobut:logger:${lib_versions.logger}",
 
-
-            logger            : "com.orhanobut:logger:${lib_versions.logger}"
+            banner            : "com.youth.banner:banner:${lib_versions.banner}"
     ]
 }

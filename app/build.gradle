@@ -56,4 +56,6 @@ dependencies {
     implementation rootProject.ext.dependencies.design
 
     implementation rootProject.ext.dependencies.logger
+
+    implementation rootProject.ext.dependencies.banner
 }
