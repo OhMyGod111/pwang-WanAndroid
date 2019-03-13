@@ -67,11 +67,16 @@ public class HomePageFragment extends BaseFragment <HomePagePresenter> implement
         mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary),
                 getResources().getColor(R.color.colorPrimary),
                 getResources().getColor(R.color.colorPrimary));
+        mSwipeRefreshLayout.setOnRefreshListener(onRefreshListener);
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(null);
     }
+
+    SwipeRefreshLayout.OnRefreshListener onRefreshListener = () -> {
+        Logger.d("onRefresh");
+    };
 
     @Override
     protected int getLayoutId() {

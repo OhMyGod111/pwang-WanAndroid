@@ -27,12 +27,14 @@ import retrofit2.http.Query;
  */
 public interface ApiService {
 
+    //<editor-fold desc="主页Api">
     /**
      *  首页文章列表
      *  http://www.wanandroid.com/article/list/0/json
      * @param page 页码
      * @return
      */
+
     @GET("/article/list/{page}/json")
     Observable<BaseResponse<ArticleList>> getHomePageArticleList(@Path("page")int page);
 
@@ -101,5 +103,21 @@ public interface ApiService {
     @FormUrlEncoded
     Observable<BaseResponse<ArticleList>> getSearchList(@Path("page")int page, @Field("k")String key);
 
+    //</editor-fold>
+
+
+    //<editor-fold desc="知识体系Api">
+
+    //</editor-fold>
+
+
+    //<editor-fold desc="导航Api">
+
+    //</editor-fold>
+
+
+    //<editor-fold desc="项目Api">
+
+    //</editor-fold>
 
 }
