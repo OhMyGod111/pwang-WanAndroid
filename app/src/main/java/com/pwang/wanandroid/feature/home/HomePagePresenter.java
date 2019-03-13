@@ -7,7 +7,6 @@ import com.orhanobut.logger.Logger;
 import com.pwang.wanandroid.base.AbstractPresenter;
 import com.pwang.wanandroid.common.BaseObserver;
 import com.pwang.wanandroid.data.DataManager;
-import com.pwang.wanandroid.data.network.entity.ArticleDetail;
 import com.pwang.wanandroid.data.network.entity.ArticleList;
 import com.pwang.wanandroid.data.network.entity.Banner;
 import com.pwang.wanandroid.data.network.entity.BaseResponse;
@@ -89,16 +88,16 @@ public class HomePagePresenter extends AbstractPresenter<HomePageContract.View> 
                 .compose(RxUtils.schedulersTransformer()).subscribeWith(new BaseObserver<Map<String, Object>>() {
                     @Override
                     public void onNext(Map<String, Object> map) {
+                        mView.setLoadingIndicator(false);
                         BaseResponse<List<Banner>> bannerBaseResponse = (BaseResponse<List<Banner>>) map.get(KEY_BANNER_DATA);
                         BaseResponse<ArticleList> articleListBaseResponse = (BaseResponse<ArticleList>) map.get(KEY_ARTICLE_DATA);
-                        assert bannerBaseResponse != null;
-                        assert articleListBaseResponse != null;
-                        List<Banner> banners = bannerBaseResponse.getData();
-                        List<ArticleDetail> details = articleListBaseResponse.getData().getDatas();
-                        if (!banners.isEmpty() && !details.isEmpty()) {
-                            mView.setLoadingIndicator(false);
-                            mView.showBanners(banners);
-                            mView.showArticles(details);
+
+                        if (bannerBaseResponse != null){
+                            mView.showBanners(bannerBaseResponse.getData());
+                        }
+
+                        if (articleListBaseResponse != null){
+                            mView.showArticles(articleListBaseResponse.getData().getDatas());
                         }
                     }
 
