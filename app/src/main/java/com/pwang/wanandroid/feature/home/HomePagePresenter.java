@@ -92,13 +92,9 @@ public class HomePagePresenter extends AbstractPresenter<HomePageContract.View> 
                         BaseResponse<List<Banner>> bannerBaseResponse = (BaseResponse<List<Banner>>) map.get(KEY_BANNER_DATA);
                         BaseResponse<ArticleList> articleListBaseResponse = (BaseResponse<ArticleList>) map.get(KEY_ARTICLE_DATA);
 
-                        if (bannerBaseResponse != null){
-                            mView.showBanners(bannerBaseResponse.getData());
-                        }
+                        if (bannerBaseResponse != null) mView.showBanners(bannerBaseResponse.getData());
 
-                        if (articleListBaseResponse != null){
-                            mView.showArticles(articleListBaseResponse.getData().getDatas());
-                        }
+                        if (articleListBaseResponse != null) mView.showArticles(articleListBaseResponse.getData().getDatas());
                     }
 
                     @Override
