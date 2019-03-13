@@ -6,6 +6,8 @@ import com.pwang.wanandroid.data.network.entity.BaseResponse;
 import com.pwang.wanandroid.data.network.entity.Knowledge;
 import com.pwang.wanandroid.data.network.entity.Navigation;
 
+import java.util.List;
+
 import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -40,7 +42,7 @@ public interface ApiService {
      * @return
      */
     @GET("/banner/json")
-    Observable<BaseResponse<Banner>> getHomePageBanner();
+    Observable<BaseResponse<List<Banner>>> getHomePageBanner();
 
     /**
      * 知识体系目录 （一级目录）

@@ -49,7 +49,7 @@ public interface HomePageContract {
 
         /**
          *  请求加载数据
-         * @param forceUpdate true 加载更多 else 直接加载
+         * @param forceUpdate if true 加载更多 else 直接加载
          */
         void loadHomePageData(boolean forceUpdate);
     }

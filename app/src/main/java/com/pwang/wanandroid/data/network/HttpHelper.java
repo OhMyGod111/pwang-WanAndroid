@@ -4,6 +4,8 @@ import com.pwang.wanandroid.data.network.entity.ArticleList;
 import com.pwang.wanandroid.data.network.entity.Banner;
 import com.pwang.wanandroid.data.network.entity.BaseResponse;
 
+import java.util.List;
+
 import io.reactivex.Observable;
 
 /**
@@ -19,5 +21,5 @@ public interface HttpHelper {
 
     Observable<BaseResponse<ArticleList>> getHomePageArticleList(int page);
 
-    Observable<BaseResponse<Banner>> getHomePageBanner();
+    Observable<BaseResponse<List<Banner>>> getHomePageBanner();
 }

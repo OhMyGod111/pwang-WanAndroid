@@ -4,6 +4,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.orhanobut.logger.Logger;
 import com.pwang.wanandroid.R;
 import com.pwang.wanandroid.base.BaseFragment;
 import com.pwang.wanandroid.data.network.entity.ArticleDetail;
@@ -49,12 +50,16 @@ public class HomePageFragment extends BaseFragment <HomePagePresenter> implement
 
     @Override
     public void showArticles(List<ArticleDetail> details) {
-
+        for (ArticleDetail detail : details) {
+            Logger.d("ArticleTitle:" + detail.getTitle());
+        }
     }
 
     @Override
     public void showBanners(List<Banner> banners) {
-
+        for (Banner banner : banners) {
+            Logger.d("Banner", ":" + banner.getTitle());
+        }
     }
 
     @Override

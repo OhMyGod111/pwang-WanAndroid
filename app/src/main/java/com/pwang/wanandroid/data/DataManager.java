@@ -5,6 +5,7 @@ import com.pwang.wanandroid.data.network.entity.ArticleList;
 import com.pwang.wanandroid.data.network.entity.Banner;
 import com.pwang.wanandroid.data.network.entity.BaseResponse;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -38,7 +39,7 @@ public class DataManager implements HttpHelper {
     }
 
     @Override
-    public Observable<BaseResponse<Banner>> getHomePageBanner() {
+    public Observable<BaseResponse<List<Banner>>> getHomePageBanner() {
         return mHttpHelper.getHomePageBanner();
     }
 }
