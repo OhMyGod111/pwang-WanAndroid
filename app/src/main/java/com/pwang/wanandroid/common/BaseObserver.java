@@ -1,4 +1,4 @@
-package com.pwang.wanandroid.base;
+package com.pwang.wanandroid.common;
 
 import io.reactivex.observers.ResourceObserver;
 

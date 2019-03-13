@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.orhanobut.logger.Logger;
 import com.pwang.wanandroid.base.AbstractPresenter;
-import com.pwang.wanandroid.base.BaseObserver;
+import com.pwang.wanandroid.common.BaseObserver;
 import com.pwang.wanandroid.data.DataManager;
 import com.pwang.wanandroid.data.network.entity.ArticleDetail;
 import com.pwang.wanandroid.data.network.entity.ArticleList;
@@ -14,7 +14,6 @@ import com.pwang.wanandroid.data.network.entity.BaseResponse;
 import com.pwang.wanandroid.di.scoped.ActivityScoped;
 import com.pwang.wanandroid.util.RxUtils;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,8 +22,6 @@ import java.util.Objects;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 
 /**
  * <pre>
