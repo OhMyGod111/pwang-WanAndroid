@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.pwang.wanandroid.common.ErrorPageType;
+
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
@@ -76,5 +78,18 @@ public abstract class BaseFragment <T extends BasePresenter> extends DaggerFragm
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    /**
+     *  统一处理异常页面
+     * @param type 异常页面类型  {@link ErrorPageType}
+     */
+    protected void showErrorPage(@ErrorPageType int type){
+        switch (type){
+            case ErrorPageType.NET_ERROR_TYPE:
+                break;
+            case ErrorPageType.NO_DATA_TYPE:
+                break;
+        }
     }
 }

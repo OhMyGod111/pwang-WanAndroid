@@ -82,4 +82,9 @@ public class HomePageFragment extends BaseFragment <HomePagePresenter> implement
     protected int getLayoutId() {
         return R.layout.home_page_fragment;
     }
+
+    @Override
+    public void showErrorPage(int type) {
+        super.showErrorPage(type);
+    }
 }

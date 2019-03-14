@@ -101,11 +101,6 @@ public class HomePagePresenter extends AbstractPresenter<HomePageContract.View> 
                     public void onError(Throwable e) {
 
                     }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
                 }));
     }
 
