@@ -5,8 +5,6 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorBrown">#D7CCC8</color>
 
-
     <color name="welcome_tv_bg_color">#809E9598</color>
-
-    <color name="welcome_fl_bg">#795548</color>
+    <color name="welcome_fl_bg_color">#795548</color>
 </resources>

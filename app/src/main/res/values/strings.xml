@@ -17,4 +17,7 @@
     <string name="nav_close">关闭</string>
     <string name="toolbar_search_hint">搜索</string>
     <string name="main_toolbar_search">搜索更多内容</string>
+    <string name="loading_desc">加载中…</string>
+    <string name="loading_end_desc">我是有底线的</string>
+    <string name="loading_fail_desc">数据加载失败</string>
 </resources>
