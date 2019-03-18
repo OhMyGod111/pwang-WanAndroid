@@ -31,8 +31,7 @@ import io.reactivex.Observable;
  *     version: 1.0
  * </pre>
  */
-@ActivityScoped
-public class HomePagePresenter extends AbstractPresenter<HomePageContract.View> implements HomePageContract.Presenter {
+public final class HomePagePresenter extends AbstractPresenter<HomePageContract.View> implements HomePageContract.Presenter {
 
     private DataManager dataManager;
 

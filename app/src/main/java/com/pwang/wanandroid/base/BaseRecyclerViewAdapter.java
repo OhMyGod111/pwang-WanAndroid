@@ -548,6 +548,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
     /**
      * 加载更多数据回调接口
      */
+    @FunctionalInterface
     public interface OnLoadMoreListener {
 
         /**
@@ -560,6 +561,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
      * Interface definition for a callback to be invoked when an item in this
      * RecyclerView itemView has been clicked.
      */
+    @FunctionalInterface
     public interface OnItemClickListener {
 
         /**
@@ -578,6 +580,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
      * Interface definition for a callback to be invoked when an item in this
      * view has been clicked and held.
      */
+    @FunctionalInterface
     public interface OnItemLongClickListener {
         /**
          * callback method to be invoked when an item in this view has been
@@ -595,6 +598,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
      * Interface definition for a callback to be invoked when an itemchild in this
      * view has been clicked
      */
+    @FunctionalInterface
     public interface OnItemChildClickListener {
         /**
          * callback method to be invoked when an item in this view has been

@@ -56,7 +56,7 @@ public class WanApplication extends DaggerApplication {
 
     private void init() {
         initLogger();
-
+        // 工具类初始化操作
         Utils.init(WanApplication.this);
     }
 

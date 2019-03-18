@@ -19,7 +19,7 @@ public interface NavigationContract {
 
     }
 
-    interface Presenter extends BasePresenter<ProjectContract.View> {
+    interface Presenter extends BasePresenter<View> {
 
     }
 }

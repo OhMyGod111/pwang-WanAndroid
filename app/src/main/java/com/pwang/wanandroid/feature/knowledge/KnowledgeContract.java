@@ -18,7 +18,7 @@ public interface KnowledgeContract {
 
     }
 
-    interface Presenter extends BasePresenter{
+    interface Presenter extends BasePresenter<View>{
 
     }
 }

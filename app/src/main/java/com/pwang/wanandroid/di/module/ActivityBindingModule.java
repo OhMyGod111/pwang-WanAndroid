@@ -1,5 +1,6 @@
 package com.pwang.wanandroid.di.module;
 
+import com.pwang.wanandroid.di.component.BaseActivityComponent;
 import com.pwang.wanandroid.di.scoped.ActivityScoped;
 import com.pwang.wanandroid.feature.WelcomeActivity;
 import com.pwang.wanandroid.feature.home.HomePageModule;
@@ -17,6 +18,7 @@ import dagger.android.ContributesAndroidInjector;
  *     version: 1.0
  * </pre>
  */
+//@Module(subcomponents = BaseActivityComponent.class)
 @Module
 public abstract class ActivityBindingModule {
 

@@ -9,7 +9,7 @@ import dagger.android.support.DaggerAppCompatActivity;
 
 /**
  * <pre>
- *     author : Wang Pan
+ *     author : WangPan
  *     e-mail : 501098462@qq.con
  *     time   : 2019/01/02
  *     desc   :

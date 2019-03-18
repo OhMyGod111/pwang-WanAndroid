@@ -1,6 +1,9 @@
 package com.pwang.wanandroid.feature.navigation;
 
 import com.pwang.wanandroid.base.BaseFragment;
+import com.pwang.wanandroid.di.scoped.ActivityScoped;
+
+import javax.inject.Inject;
 
 /**
  * <pre>
@@ -11,7 +14,13 @@ import com.pwang.wanandroid.base.BaseFragment;
  *     version: 1.0
  * </pre>
  */
+//@ActivityScoped
 public class NavigationFragment extends BaseFragment {
+
+    @Inject
+    public NavigationFragment() {
+    }
+
     @Override
     protected void initView() {
 

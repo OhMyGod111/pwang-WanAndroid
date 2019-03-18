@@ -1,6 +1,5 @@
 package com.pwang.wanandroid.feature.home;
 
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,7 +28,6 @@ import butterknife.BindView;
  *     version: 1.0
  * </pre>
  */
-@ActivityScoped
 public class HomePageFragment extends BaseFragment <HomePagePresenter> implements HomePageContract.View {
 
     @BindView(R.id.recycler_view)

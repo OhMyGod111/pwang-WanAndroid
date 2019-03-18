@@ -5,12 +5,14 @@ import com.pwang.wanandroid.data.DataManager;
 import com.pwang.wanandroid.di.module.ActivityBindingModule;
 import com.pwang.wanandroid.di.module.ApplicationModule;
 import com.pwang.wanandroid.di.module.DataManagerModule;
+import com.pwang.wanandroid.di.module.FragmentBindingModule;
 import com.pwang.wanandroid.di.module.HttpModule;
 
 import javax.inject.Singleton;
 
 import dagger.BindsInstance;
 import dagger.Component;
+import dagger.android.AndroidInjectionModule;
 import dagger.android.AndroidInjector;
 import dagger.android.support.AndroidSupportInjectionModule;
 
@@ -25,10 +27,13 @@ import dagger.android.support.AndroidSupportInjectionModule;
  */
 @Singleton
 @Component(modules = {ApplicationModule.class,
-        ActivityBindingModule.class,
         AndroidSupportInjectionModule.class,
+        AndroidInjectionModule.class,
+        ActivityBindingModule.class,
+        FragmentBindingModule.class,
         HttpModule.class,
-        DataManagerModule.class})
+        DataManagerModule.class
+})
 public interface AppComponent extends AndroidInjector<WanApplication> {
 
     DataManager getDataManager();
@@ -42,3 +47,5 @@ public interface AppComponent extends AndroidInjector<WanApplication> {
         AppComponent builder();
     }
 }
+
+

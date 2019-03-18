@@ -1,6 +1,12 @@
 package com.pwang.wanandroid.feature.knowledge;
 
+import android.os.Bundle;
+
 import com.pwang.wanandroid.base.BaseFragment;
+import com.pwang.wanandroid.di.scoped.ActivityScoped;
+
+import javax.inject.Inject;
+import javax.inject.Qualifier;
 
 /**
  * <pre>
@@ -11,7 +17,21 @@ import com.pwang.wanandroid.base.BaseFragment;
  *     version: 1.0
  * </pre>
  */
+
+//@ActivityScoped
 public class KnowledgeFragment extends BaseFragment {
+
+    public static KnowledgeFragment newInstance(String arg1, String arg2) {
+        Bundle args = new Bundle();
+
+        KnowledgeFragment fragment = new KnowledgeFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Inject
+    public KnowledgeFragment() {
+    }
 
     @Override
     protected void initView() {
