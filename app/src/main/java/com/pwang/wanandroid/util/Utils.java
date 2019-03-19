@@ -16,8 +16,7 @@ import java.util.Objects;
  */
 public final class Utils {
 
-    @SuppressLint("StaticFieldLeak")
-    static volatile Context sInstance;
+    private static volatile Context sInstance;
 
     private Utils() {
     }
