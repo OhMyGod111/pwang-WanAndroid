@@ -84,7 +84,7 @@ public abstract class BaseFragment <T extends BasePresenter> extends DaggerFragm
      *  统一处理异常页面
      * @param type 异常页面类型  {@link ErrorPageType}
      */
-    protected void showErrorPage(@ErrorPageType int type){
+    public void showErrorPage(@ErrorPageType int type){
         switch (type){
             case ErrorPageType.NET_ERROR_TYPE:
                 break;

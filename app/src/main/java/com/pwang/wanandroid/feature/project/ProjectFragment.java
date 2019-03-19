@@ -1,5 +1,6 @@
 package com.pwang.wanandroid.feature.project;
 
+import com.pwang.wanandroid.R;
 import com.pwang.wanandroid.base.BaseFragment;
 import com.pwang.wanandroid.di.scoped.ActivityScoped;
 
@@ -14,8 +15,7 @@ import javax.inject.Inject;
  *     version: 1.0
  * </pre>
  */
-//@ActivityScoped
-public class ProjectFragment extends BaseFragment {
+public class ProjectFragment extends BaseFragment <ProjectPresenter> implements ProjectContract.View{
 
     @Inject
     public ProjectFragment() {
@@ -28,6 +28,6 @@ public class ProjectFragment extends BaseFragment {
 
     @Override
     protected int getLayoutId() {
-        return 0;
+        return R.layout.project_page_fragment;
     }
 }

@@ -1,5 +1,6 @@
 package com.pwang.wanandroid.feature.navigation;
 
+import com.pwang.wanandroid.R;
 import com.pwang.wanandroid.base.BaseFragment;
 import com.pwang.wanandroid.di.scoped.ActivityScoped;
 
@@ -14,8 +15,7 @@ import javax.inject.Inject;
  *     version: 1.0
  * </pre>
  */
-//@ActivityScoped
-public class NavigationFragment extends BaseFragment {
+public class NavigationFragment extends BaseFragment <NavigationPresenter> implements NavigationContract.View{
 
     @Inject
     public NavigationFragment() {
@@ -28,6 +28,6 @@ public class NavigationFragment extends BaseFragment {
 
     @Override
     protected int getLayoutId() {
-        return 0;
+        return R.layout.navigation_page_fragment;
     }
 }

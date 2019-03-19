@@ -2,6 +2,7 @@ package com.pwang.wanandroid.feature.knowledge;
 
 import android.os.Bundle;
 
+import com.pwang.wanandroid.R;
 import com.pwang.wanandroid.base.BaseFragment;
 import com.pwang.wanandroid.di.scoped.ActivityScoped;
 
@@ -18,8 +19,7 @@ import javax.inject.Qualifier;
  * </pre>
  */
 
-//@ActivityScoped
-public class KnowledgeFragment extends BaseFragment {
+public class KnowledgeFragment extends BaseFragment <KnowledgePresenter> implements KnowledgeContract.View{
 
     public static KnowledgeFragment newInstance(String arg1, String arg2) {
         Bundle args = new Bundle();
@@ -40,6 +40,6 @@ public class KnowledgeFragment extends BaseFragment {
 
     @Override
     protected int getLayoutId() {
-        return 0;
+        return R.layout.knowledge_page_fragment;
     }
 }

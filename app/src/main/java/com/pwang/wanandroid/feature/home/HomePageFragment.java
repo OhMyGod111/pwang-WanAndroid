@@ -89,11 +89,6 @@ public class HomePageFragment extends BaseFragment <HomePagePresenter> implement
         return R.layout.home_page_fragment;
     }
 
-    @Override
-    public void showErrorPage(int type) {
-        super.showErrorPage(type);
-    }
-
     static class ArticleAdapter extends BaseRecyclerViewAdapter<String>{
 
         public ArticleAdapter(int layoutResId) {

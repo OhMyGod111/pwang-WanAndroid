@@ -14,7 +14,6 @@ import javax.inject.Inject;
  *    @version: 1.0
  * </pre>
  */
-//@ActivityScoped
 public final class NavigationPresenter extends AbstractPresenter<NavigationContract.View> implements
         NavigationContract.Presenter {
 

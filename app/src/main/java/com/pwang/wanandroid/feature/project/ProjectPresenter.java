@@ -2,6 +2,7 @@ package com.pwang.wanandroid.feature.project;
 
 import com.pwang.wanandroid.base.AbstractPresenter;
 import com.pwang.wanandroid.di.scoped.ActivityScoped;
+import com.pwang.wanandroid.di.scoped.FragmentScoped;
 
 import javax.inject.Inject;
 
@@ -14,7 +15,6 @@ import javax.inject.Inject;
  *    @version: 1.0
  * </pre>
  */
-//@ActivityScoped
 public final class ProjectPresenter extends AbstractPresenter<ProjectContract.View> implements
         ProjectContract.Presenter {
 

@@ -1,5 +1,6 @@
 package com.pwang.wanandroid.feature.home;
 
+import com.pwang.wanandroid.di.module.FragmentBindingModule;
 import com.pwang.wanandroid.di.scoped.ActivityScoped;
 import com.pwang.wanandroid.di.scoped.FragmentScoped;
 import com.pwang.wanandroid.feature.knowledge.KnowledgeContract;
@@ -32,36 +33,36 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *     version: 1.0
  * </pre>
  */
-@Module
+@Module()
 public abstract class HomePageModule {
 
-    @FragmentScoped
-    @ContributesAndroidInjector
-    abstract HomePageFragment homePageFragment();
+//    @FragmentScoped
+//    @ContributesAndroidInjector
+//    abstract HomePageFragment homePageFragment();
 
     @Binds
     abstract HomePageContract.Presenter homePagePresenter(HomePagePresenter presenter);
 
 
-    @FragmentScoped
-    @ContributesAndroidInjector
-    abstract KnowledgeFragment knowledgeFragment();
+//    @FragmentScoped
+//    @ContributesAndroidInjector
+//    abstract KnowledgeFragment knowledgeFragment();
 
     @Binds
     abstract KnowledgeContract.Presenter knowledgePresenter(KnowledgePresenter presenter);
 
 
-    @FragmentScoped
-    @ContributesAndroidInjector
-    abstract NavigationFragment navigationFragment();
+//    @FragmentScoped
+//    @ContributesAndroidInjector
+//    abstract NavigationFragment navigationFragment();
 
     @Binds
     abstract NavigationContract.Presenter navigationPresenter(NavigationPresenter presenter);
 
 
-    @FragmentScoped
-    @ContributesAndroidInjector
-    abstract ProjectFragment projectFragment();
+//    @FragmentScoped
+//    @ContributesAndroidInjector
+//    abstract ProjectFragment projectFragment();
 
     @Binds
     abstract ProjectContract.Presenter projectPresenter(ProjectPresenter presenter);
