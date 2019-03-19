@@ -1,6 +1,5 @@
 package com.pwang.wanandroid.util;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 
 import java.util.Objects;
