@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.SearchView;
@@ -20,6 +23,9 @@ import android.widget.TextView;
 
 import com.pwang.wanandroid.R;
 import com.pwang.wanandroid.base.BaseActivity;
+import com.pwang.wanandroid.feature.knowledge.KnowledgeFragment;
+import com.pwang.wanandroid.feature.navigation.NavigationFragment;
+import com.pwang.wanandroid.feature.project.ProjectFragment;
 import com.pwang.wanandroid.util.ActivityUtils;
 
 import java.util.Objects;
@@ -46,6 +52,19 @@ public class MainActivity extends BaseActivity {
 
     @Inject
     HomePageFragment mHomePageFragment;
+    @Inject
+    NavigationFragment mNavigationFragment;
+    @Inject
+    KnowledgeFragment mKnowledgeFragment;
+    @Inject
+    ProjectFragment mProjectFragment;
+
+    private static final int DEFAULT_HOME_PAGE_FRAGMENT = R.id.tab_home_page;
+
+    // 用户期望看见的Fragment
+    private Fragment mTargetFragment;
+    // 如果存在 即是当前显示的Fragment
+    private Fragment mCurrentFragment;
 
 
     @Override
@@ -55,7 +74,6 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
-
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(MainActivity.this, drawerLayout,
                 toolbar, R.string.nav_open, R.string.nav_close) {
             @Override
@@ -75,16 +93,50 @@ public class MainActivity extends BaseActivity {
 
         if (bottomNav != null) {
             setupBottomDrawerContent(bottomNav);
+            bottomNav.setSelectedItemId(DEFAULT_HOME_PAGE_FRAGMENT);
         }
-
-        HomePageFragment homePageFragment = (HomePageFragment) getSupportFragmentManager().findFragmentById(R.id.fl_container);
-
-        if (homePageFragment == null) {
-            homePageFragment = mHomePageFragment;
-            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), homePageFragment, R.id.fl_container);
-        }
-
         setupToolbar();
+    }
+
+    private void switchFragment(int itemId) {
+        FragmentManager supportFragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
+        switch (itemId) {
+            case R.id.tab_home_page:
+                HomePageFragment homePageFragment = (HomePageFragment) supportFragmentManager.findFragmentByTag(HomePageFragment.class.getName());
+                if (homePageFragment == null) {
+                    homePageFragment = mHomePageFragment;
+                    fragmentTransaction.add(R.id.fl_container, homePageFragment, HomePageFragment.class.getName());
+                }
+                break;
+            case R.id.tab_knowledge_hierarchy:
+                KnowledgeFragment knowledgeFragment = (KnowledgeFragment) supportFragmentManager.findFragmentByTag(KnowledgeFragment.class.getName());
+                if (knowledgeFragment == null) {
+                    knowledgeFragment = mKnowledgeFragment;
+                    fragmentTransaction.add(R.id.fl_container, knowledgeFragment, KnowledgeFragment.class.getName());
+                }
+                break;
+            case R.id.tab_navigation:
+                NavigationFragment navigationFragment = (NavigationFragment) supportFragmentManager.findFragmentByTag(NavigationFragment.class.getName());
+                if (navigationFragment == null) {
+                    navigationFragment = mNavigationFragment;
+                    fragmentTransaction.add(R.id.fl_container, navigationFragment, NavigationFragment.class.getName());
+                }
+                break;
+            case R.id.tab_project:
+                ProjectFragment projectFragment = (ProjectFragment) supportFragmentManager.findFragmentByTag(ProjectFragment.class.getName());
+                if (projectFragment == null) {
+                    projectFragment = mProjectFragment;
+                    fragmentTransaction.add(R.id.fl_container, projectFragment, ProjectFragment.class.getName());
+                }
+                break;
+        }
+
+        if (mCurrentFragment != null && mCurrentFragment != mTargetFragment) {
+            fragmentTransaction.hide(mCurrentFragment).show(mTargetFragment).commit();
+        } else {
+            fragmentTransaction.show(mTargetFragment).commit();
+        }
     }
 
     @Override
@@ -99,7 +151,7 @@ public class MainActivity extends BaseActivity {
     @SuppressLint("NewApi")
     private void setupToolbar() {
         View titleView = toolbar.getChildAt(0);
-        if (Objects.nonNull(titleView) && titleView instanceof TextView){
+        if (Objects.nonNull(titleView) && titleView instanceof TextView) {
             ViewGroup.LayoutParams layoutParams = titleView.getLayoutParams();
             layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
             ((TextView) titleView).setGravity(Gravity.CENTER_HORIZONTAL);
@@ -110,18 +162,28 @@ public class MainActivity extends BaseActivity {
         bottomNav.setOnNavigationItemSelectedListener(menuItem -> {
             switch (menuItem.getItemId()) {
                 case R.id.tab_home_page:
-                    Log.e("TAG", "tab_home_page:");
+                    mTargetFragment = mHomePageFragment;
+                    switchFragment(menuItem.getItemId());
+                    mCurrentFragment = mHomePageFragment;
                     break;
                 case R.id.tab_knowledge_hierarchy:
-                    Log.e("TAG", "tab_knowledge_hierarchy:");
+                    mTargetFragment = mKnowledgeFragment;
+                    switchFragment(menuItem.getItemId());
+                    mCurrentFragment = mKnowledgeFragment;
                     break;
                 case R.id.tab_navigation:
-                    Log.e("TAG", "tab_navigation:");
+                    mTargetFragment = mNavigationFragment;
+                    switchFragment(menuItem.getItemId());
+                    mCurrentFragment = mNavigationFragment;
                     break;
                 case R.id.tab_project:
-                    Log.e("TAG", "tab_project:");
+                    mTargetFragment = mProjectFragment;
+                    switchFragment(menuItem.getItemId());
+                    mCurrentFragment = mProjectFragment;
                     break;
             }
+            toolbar.setTitle(menuItem.getItemId() == R.id.tab_home_page ?
+                    getResources().getString(R.string.app_name) : menuItem.getTitle());
             return true;
         });
     }
