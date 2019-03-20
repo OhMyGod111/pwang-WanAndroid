@@ -5,13 +5,16 @@ import com.pwang.wanandroid.data.network.ApiService;
 import com.pwang.wanandroid.data.network.Interceptor.CacheInterceptor;
 import com.pwang.wanandroid.data.network.Interceptor.HttpLoggingInterceptor;
 import com.pwang.wanandroid.data.network.NetworkConfig;
+import com.pwang.wanandroid.util.Utils;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -48,15 +51,18 @@ public class HttpModule {
         if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
-            builder.addInterceptor(logging);
+            builder.addInterceptor(logging); // 应用拦截器
+//            builder.addNetworkInterceptor(logging); // 网络拦截器
             // 此拦截器可以通过Chrome 浏览器调试接口， 目前没有添加此框架依赖，感觉还不错
 //            .addNetworkInterceptor(new StethoInterceptor());
         }
 
         CacheInterceptor cacheInterceptor = new CacheInterceptor();
+        Cache cache = new Cache(new File(Utils.getAppContext().getCacheDir(),
+                NetworkConfig.CACHE_FILE),NetworkConfig.CACHE_SIZE);
         builder.addNetworkInterceptor(cacheInterceptor)
                 .addInterceptor(cacheInterceptor)
-//                .cache(null)
+                .cache(cache)
                 .connectTimeout(NetworkConfig.CONNECT_TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(NetworkConfig.READ_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(NetworkConfig.WRITE_TIMEOUT, TimeUnit.SECONDS)

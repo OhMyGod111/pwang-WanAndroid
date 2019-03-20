@@ -18,6 +18,10 @@ public final class NetworkUtils {
     private NetworkUtils() {
     }
 
+    /**
+     *  网络是否可用
+     * @return true 网络可用 否则 false
+     */
     public static boolean isNetConnected() {
         ConnectivityManager cm = (ConnectivityManager) Utils.getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         if (cm != null) {

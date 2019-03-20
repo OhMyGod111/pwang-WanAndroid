@@ -22,4 +22,8 @@ public final class NetworkConfig {
     public static final long READ_TIMEOUT= 20L;
 
     public static final long WRITE_TIMEOUT= 20L;
+
+    public static final String CACHE_FILE = "NetCache";
+
+    public static final int CACHE_SIZE = 1024 * 1024 * 50;
 }
