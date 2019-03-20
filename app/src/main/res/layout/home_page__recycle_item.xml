@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cv_recycle_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dp8"
+    android:layout_marginBottom="@dimen/dp8"
+    app:cardCornerRadius="@dimen/dp10"
+    app:contentPadding="@dimen/dp16"
+    app:cardElevation="@dimen/dp5"
+    app:cardPreventCornerOverlap="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_flag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/home_recycle_item_tv_flag_bg"
+            android:contentDescription="@string/recycle_item_source_desc"
+            android:paddingStart="@dimen/dp10"
+            android:paddingTop="@dimen/dp5"
+            android:paddingEnd="@dimen/dp10"
+            android:paddingBottom="@dimen/dp5"
+            android:text="新"
+            android:layout_marginRight="@dimen/dp10"
+            android:textColor="@color/home_recycle_item_tv_flag_color"
+            android:textSize="@dimen/font_tiny_size"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_source"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/home_recycle_item_tv_bg"
+            android:contentDescription="@string/recycle_item_source_desc"
+            android:layout_toEndOf="@id/tv_flag"
+            android:paddingStart="@dimen/dp10"
+            android:paddingEnd="@dimen/dp10"
+            android:paddingTop="@dimen/dp5"
+            android:paddingBottom="@dimen/dp5"
+            android:text="公众号"
+            android:textColor="@color/home_recycle_item_tv_color"
+            android:textSize="@dimen/font_tiny_size"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/tv_source"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_toEndOf="@+id/tv_source"
+            android:text="洪洋"
+            android:textColor="@color/home_page_label_tv_color"
+            android:textSize="@dimen/font_tiny_size" />
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/tv_source"
+            android:layout_alignParentEnd="true"
+            android:text="2019-03-06"
+            android:textColor="@color/home_page_label_tv_color"
+            android:textSize="@dimen/font_tiny_size" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_author"
+            android:layout_marginTop="@dimen/dp16"
+            android:text="Android实现截屏和截长图功能的各种方法"
+            android:textColor="@color/home_page_title_tv_color"
+            android:textSize="@dimen/font_medium_size" />
+
+        <TextView
+            android:id="@+id/tv_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_title"
+            android:layout_marginTop="@dimen/dp16"
+            android:text="Android实现截屏/我是谁"
+            android:textColor="@color/home_page_label_tv_color"
+            android:textSize="@dimen/font_tiny_size" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tv_label"
+            android:layout_alignParentEnd="true"
+            android:scaleType="center"
+            app:srcCompat="@drawable/article_collect_selector"/>
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>

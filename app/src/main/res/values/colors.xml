@@ -7,4 +7,8 @@
 
     <color name="welcome_tv_bg_color">#809E9598</color>
     <color name="welcome_fl_bg_color">#795548</color>
+    <color name="home_recycle_item_tv_color">#11CAE2</color>
+    <color name="home_recycle_item_tv_flag_color">#E41B2C</color>
+    <color name="home_page_label_tv_color">#E6221E1E</color>
+    <color name="home_page_title_tv_color">#E6000000</color>
 </resources>

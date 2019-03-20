@@ -234,11 +234,11 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
     /**
      * 添加多种布局类型
      *
-     * @param key
-     * @param layoutResId
+     * @param key 这个key应该写入 viewType 的类型
+     * @param layoutResId 相应 viewType 类型的布局
      * @return
      */
-    public BaseRecyclerViewAdapter addMultiLayout(int key, @LayoutRes int layoutResId) {
+    final public BaseRecyclerViewAdapter addMultiLayout(int key, @LayoutRes int layoutResId) {
         mMultiLayouts.put(key, layoutResId);
         return this;
     }

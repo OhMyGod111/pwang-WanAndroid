@@ -9,17 +9,13 @@
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <include layout="@layout/toolbar_include" />
-
     </android.support.design.widget.AppBarLayout>
 
     <FrameLayout
         android:id="@+id/fl_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/white">
-
+        android:layout_height="match_parent">
     </FrameLayout>
 
     <android.support.design.widget.BottomNavigationView
@@ -28,6 +24,7 @@
         android:layout_height="56dp"
         android:layout_gravity="bottom"
         android:background="@android:color/white"
+        app:elevation="@dimen/dp8"
         app:menu="@menu/main_bottom_nav_item">
     </android.support.design.widget.BottomNavigationView>
 
