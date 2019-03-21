@@ -47,7 +47,6 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<BaseRecyclerViewAdapter.VH> {
 
     protected List<T> mData;
-    private Context mContext;
     private LayoutInflater mLayoutInflater;
 
     private OnItemClickListener mOnItemClickListener;
@@ -92,7 +91,6 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
     public VH onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         if (mLayoutInflater == null)
             this.mLayoutInflater = LayoutInflater.from(viewGroup.getContext());
-        if (mContext == null) this.mContext = viewGroup.getContext();
         View view;
         switch (viewType) {
             case HEADER_VIEW:
@@ -120,6 +118,10 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
         switch (viewType){
             case LOADING_VIEW:
                 mLoadingView.convert(vh);
+                break;
+            case HEADER_VIEW:
+                break;
+            case FOOTER_VIEW:
                 break;
             default:
                 convert(vh, getDataItemByPos(position));
@@ -287,7 +289,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
 
     public void addHeaderView(View header, int index, int orientation) {
         if (mHeaderLayout == null) {
-            mHeaderLayout = new LinearLayout(mContext);
+            mHeaderLayout = new LinearLayout(header.getContext());
             if (orientation == LinearLayout.VERTICAL) {
                 mHeaderLayout.setOrientation(LinearLayout.VERTICAL);
                 mHeaderLayout.setLayoutParams(new LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
@@ -316,7 +318,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
 
     public void addFooterView(View footer, int index, int orientation) {
         if (mFooterLayout == null) {
-            mFooterLayout = new LinearLayout(mContext);
+            mFooterLayout = new LinearLayout(footer.getContext());
             if (orientation == LinearLayout.VERTICAL) {
                 mFooterLayout.setOrientation(LinearLayout.VERTICAL);
                 mFooterLayout.setLayoutParams(new RecyclerView.LayoutParams(MATCH_PARENT, WRAP_CONTENT));

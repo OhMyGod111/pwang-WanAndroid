@@ -14,7 +14,7 @@
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_menu"
-        android:layout_width="270dp"
+        android:layout_width="@dimen/dp270"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:menu="@menu/nav_menu_item"

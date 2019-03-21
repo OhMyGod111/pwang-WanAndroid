@@ -61,4 +61,7 @@ dependencies {
 
     implementation rootProject.ext.dependencies.cookieJar
 
+    implementation rootProject.ext.dependencies.glide
+    annotationProcessor rootProject.ext.dependencies.glideCompiler
+
 }

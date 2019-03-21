@@ -1,17 +1,24 @@
 package com.pwang.wanandroid.feature.home;
 
+import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.orhanobut.logger.Logger;
 import com.pwang.wanandroid.R;
 import com.pwang.wanandroid.base.BaseFragment;
 import com.pwang.wanandroid.base.BaseRecyclerViewAdapter;
 import com.pwang.wanandroid.data.network.entity.ArticleDetail;
 import com.pwang.wanandroid.data.network.entity.Banner;
-import com.pwang.wanandroid.di.scoped.ActivityScoped;
+import com.pwang.wanandroid.util.Utils;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.Transformer;
+import com.youth.banner.listener.OnBannerListener;
+import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,13 +36,14 @@ import butterknife.BindView;
  *     version: 1.0
  * </pre>
  */
-public class HomePageFragment extends BaseFragment <HomePagePresenter> implements HomePageContract.View {
+public class HomePageFragment extends BaseFragment<HomePagePresenter> implements HomePageContract.View {
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     private ArticleAdapter mAdapter;
+    private com.youth.banner.Banner mBanner;
 
     @Inject
     public HomePageFragment() {
@@ -58,8 +66,23 @@ public class HomePageFragment extends BaseFragment <HomePagePresenter> implement
 
     @Override
     public void showBanners(List<Banner> banners) {
+        ArrayList<String> imgUrls = new ArrayList<>();
+        ArrayList<String> titles = new ArrayList<>();
+        imgUrls.clear();
+        titles.clear();
         for (Banner banner : banners) {
-            Logger.d("Banner", ":" + banner.getTitle());
+            imgUrls.add(banner.getImagePath());
+            titles.add(banner.getTitle());
+        }
+        mBanner.setBannerTitles(titles).setImages(imgUrls).start();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mBanner != null) {
+            mBanner.stopAutoPlay();
+            mBanner = null;
         }
     }
 
@@ -73,7 +96,24 @@ public class HomePageFragment extends BaseFragment <HomePagePresenter> implement
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext(), LinearLayoutManager.VERTICAL, false));
 //        mRecyclerView.addItemDecoration(new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.HORIZONTAL));
+
+        mBanner = new com.youth.banner.Banner(mRecyclerView.getContext());
+        mBanner.setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE) // banner 样式
+                .setBannerAnimation(Transformer.DepthPage)// 动画效果
+                .setImageLoader(new GlideImageLoader())
+                .setIndicatorGravity(BannerConfig.CENTER) //设置指示器位置，当有banner中有指示器时
+                .setOnBannerListener(onBannerListener)
+                .setDelayTime(3 * 1000) // 设置轮播时间
+                .isAutoPlay(true); // 设置自动轮播
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+                Utils.dip2px(getResources().getDimension(R.dimen.dp100)));
+        mBanner.setPadding(0,
+                Utils.dip2px(getResources().getDimension(R.dimen.dp10)),
+                0,
+                Utils.dip2px(getResources().getDimension(R.dimen.dp10)));
+        mBanner.setLayoutParams(layoutParams);
         mAdapter = new ArticleAdapter(R.layout.home_page__recycle_item);
+        mAdapter.addHeaderView(mBanner);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -81,12 +121,16 @@ public class HomePageFragment extends BaseFragment <HomePagePresenter> implement
         Logger.d("onRefresh");
     };
 
+    OnBannerListener onBannerListener = position -> {
+
+    };
+
     @Override
     protected int getLayoutId() {
         return R.layout.home_page_fragment;
     }
 
-    static class ArticleAdapter extends BaseRecyclerViewAdapter<ArticleDetail>{
+    static class ArticleAdapter extends BaseRecyclerViewAdapter<ArticleDetail> {
 
         public ArticleAdapter(int layoutResId) {
             super(layoutResId);
@@ -94,7 +138,7 @@ public class HomePageFragment extends BaseFragment <HomePagePresenter> implement
 
         @Override
         protected void convert(VH holder, ArticleDetail item) {
-            switch (holder.getItemViewType()){
+            switch (holder.getItemViewType()) {
                 case 0:
                     break;
                 case 1:
@@ -109,6 +153,18 @@ public class HomePageFragment extends BaseFragment <HomePagePresenter> implement
                     holder.setText(R.id.tv_label, item.getSuperChapterName());
                     break;
             }
+        }
+    }
+
+    /**
+     * Banner 图显示专用 ImageLoader
+     */
+    private static class GlideImageLoader extends ImageLoader {
+        private static final long serialVersionUID = 4455767717749086694L;
+
+        @Override
+        public void displayImage(Context context, Object path, ImageView imageView) {
+            Glide.with(context).load(path).into(imageView);
         }
     }
 }
