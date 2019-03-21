@@ -8,7 +8,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.orhanobut.logger.Logger;
 import com.pwang.wanandroid.R;
 import com.pwang.wanandroid.base.BaseFragment;
 import com.pwang.wanandroid.base.BaseRecyclerViewAdapter;
@@ -92,6 +91,9 @@ public class HomePageFragment extends BaseFragment<HomePagePresenter> implements
                 getResources().getColor(R.color.colorPrimary),
                 getResources().getColor(R.color.colorPrimary));
         mSwipeRefreshLayout.setOnRefreshListener(onRefreshListener);
+        // 设置旋转进度的高度
+        mSwipeRefreshLayout.setProgressViewEndTarget(true, Utils.dip2px(getResources()
+                .getDimension(R.dimen.dp50)));
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext(), LinearLayoutManager.VERTICAL, false));
@@ -118,7 +120,8 @@ public class HomePageFragment extends BaseFragment<HomePagePresenter> implements
     }
 
     SwipeRefreshLayout.OnRefreshListener onRefreshListener = () -> {
-        Logger.d("onRefresh");
+//        mSwipeRefreshLayout.setRefreshing(false);
+        mPresenter.loadHomePageData(false);
     };
 
     OnBannerListener onBannerListener = position -> {
