@@ -88,8 +88,8 @@ public class HomePageFragment extends BaseFragment<HomePagePresenter> implements
     @Override
     protected void initView() {
         mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary),
-                getResources().getColor(R.color.colorPrimary),
-                getResources().getColor(R.color.colorPrimary));
+                getResources().getColor(R.color.colorPrimaryDark),
+                getResources().getColor(R.color.home_recycle_item_tv_color));
         mSwipeRefreshLayout.setOnRefreshListener(onRefreshListener);
         // 设置旋转进度的高度
         mSwipeRefreshLayout.setProgressViewEndTarget(true, Utils.dip2px(getResources()
