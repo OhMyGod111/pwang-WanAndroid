@@ -26,7 +26,6 @@ ext {
             versionCode       : 1,
             versionName       : "1.0.0"
     ]
-
     dependencies = [
             // shimmer module
             supportAnnotations: "com.android.support:support-annotations:${lib_versions.supportVersion}",
@@ -34,7 +33,7 @@ ext {
             // app module
             appcompatV7       : "com.android.support:appcompat-v7:${lib_versions.supportVersion}",
             design            : "com.android.support:design:${lib_versions.supportVersion}",
-            
+
             constraint        : "com.android.support.constraint:constraint-layout:${lib_versions.constraint}",
 
             // dagger2
@@ -59,8 +58,10 @@ ext {
             butterknife       : "com.jakewharton:butterknife:${lib_versions.butterknife}",
             butterkcompiler   : "com.jakewharton:butterknife-compiler:${lib_versions.butterkcompiler}",
 
+            cookieJar         : "com.github.franmontiel:PersistentCookieJar:v1.0.1",
             logger            : "com.orhanobut:logger:${lib_versions.logger}",
+            banner            : "com.youth.banner:banner:${lib_versions.banner}",
 
-            banner            : "com.youth.banner:banner:${lib_versions.banner}"
     ]
+
 }

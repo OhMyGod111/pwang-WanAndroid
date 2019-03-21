@@ -1,10 +1,14 @@
 package com.pwang.wanandroid.di.module;
 
+import com.franmontiel.persistentcookiejar.PersistentCookieJar;
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.pwang.wanandroid.BuildConfig;
 import com.pwang.wanandroid.data.network.ApiService;
 import com.pwang.wanandroid.data.network.Interceptor.CacheInterceptor;
 import com.pwang.wanandroid.data.network.Interceptor.HttpLoggingInterceptor;
 import com.pwang.wanandroid.data.network.NetworkConfig;
+import com.pwang.wanandroid.data.network.cookie.CookieManager;
 import com.pwang.wanandroid.util.Utils;
 
 import java.io.File;
@@ -66,7 +70,8 @@ public class HttpModule {
                 .connectTimeout(NetworkConfig.CONNECT_TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(NetworkConfig.READ_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(NetworkConfig.WRITE_TIMEOUT, TimeUnit.SECONDS)
-//                .cookieJar(null)
+                .cookieJar(new PersistentCookieJar(new SetCookieCache(),
+                        new SharedPrefsCookiePersistor(Utils.getAppContext())))
                 .retryOnConnectionFailure(true);  // 错误重连
         return builder.build();
     }

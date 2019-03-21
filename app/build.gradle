@@ -58,4 +58,7 @@ dependencies {
     implementation rootProject.ext.dependencies.logger
 
     implementation rootProject.ext.dependencies.banner
+
+    implementation rootProject.ext.dependencies.cookieJar
+
 }
