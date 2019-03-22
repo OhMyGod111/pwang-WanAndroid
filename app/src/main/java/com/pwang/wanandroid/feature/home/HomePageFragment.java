@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.pwang.wanandroid.R;
@@ -76,6 +77,7 @@ public class HomePageFragment extends BaseFragment<HomePagePresenter> implements
             titles.add(banner.getTitle());
         }
         mBanner.setBannerTitles(titles).setImages(imgUrls).start();
+        mBanner.setTag(banners);
     }
 
     @Override
@@ -123,7 +125,8 @@ public class HomePageFragment extends BaseFragment<HomePagePresenter> implements
     };
 
     OnBannerListener onBannerListener = position -> {
-
+        Banner banner = ((List<Banner>) mBanner.getTag()).get(position);
+        Toast.makeText(getContext(), "Banner:" + banner.getTitle(), Toast.LENGTH_SHORT).show();
     };
 
     @Override

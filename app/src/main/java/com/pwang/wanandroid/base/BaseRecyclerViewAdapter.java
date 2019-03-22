@@ -307,6 +307,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT);
                 layoutParams.topMargin = (int) mHeaderLayout.getContext().getResources().getDimension(R.dimen.dp50);
+                layoutParams.bottomMargin = (int) mHeaderLayout.getContext().getResources().getDimension(R.dimen.dp10);
                 mHeaderLayout.setLayoutParams(layoutParams);
                 mHeaderLayout.setPadding(Utils.dip2px(mHeaderLayout.getContext().getResources().getDimension(R.dimen.dp0)),
                         Utils.dip2px(mHeaderLayout.getContext().getResources().getDimension(R.dimen.dp3)),
