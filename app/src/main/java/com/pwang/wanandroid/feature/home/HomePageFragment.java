@@ -1,11 +1,13 @@
 package com.pwang.wanandroid.feature.home;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.FrameLayout;
+import android.view.LayoutInflater;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.pwang.wanandroid.R;
@@ -98,25 +100,21 @@ public class HomePageFragment extends BaseFragment<HomePagePresenter> implements
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext(), LinearLayoutManager.VERTICAL, false));
 //        mRecyclerView.addItemDecoration(new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.HORIZONTAL));
+        mAdapter = new ArticleAdapter(R.layout.home_page__recycle_item);
+        mRecyclerView.setAdapter(mAdapter);
 
-        mBanner = new com.youth.banner.Banner(mRecyclerView.getContext());
-        mBanner.setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE) // banner 样式
+        @SuppressLint("InflateParams") LinearLayout linearLayout  = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.home_page_banner, null);
+        this.mBanner = linearLayout.findViewById(R.id.banner);
+        linearLayout.removeView(this.mBanner);
+        mAdapter.addHeaderView(this.mBanner);
+
+        this.mBanner.setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE) // banner 样式
                 .setBannerAnimation(Transformer.DepthPage)// 动画效果
                 .setImageLoader(new GlideImageLoader())
                 .setIndicatorGravity(BannerConfig.CENTER) //设置指示器位置，当有banner中有指示器时
                 .setOnBannerListener(onBannerListener)
                 .setDelayTime(3 * 1000) // 设置轮播时间
                 .isAutoPlay(true); // 设置自动轮播
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
-                Utils.dip2px(getResources().getDimension(R.dimen.dp100)));
-        mBanner.setPadding(0,
-                Utils.dip2px(getResources().getDimension(R.dimen.dp10)),
-                0,
-                Utils.dip2px(getResources().getDimension(R.dimen.dp10)));
-        mBanner.setLayoutParams(layoutParams);
-        mAdapter = new ArticleAdapter(R.layout.home_page__recycle_item);
-        mAdapter.addHeaderView(mBanner);
-        mRecyclerView.setAdapter(mAdapter);
     }
 
     SwipeRefreshLayout.OnRefreshListener onRefreshListener = () -> {

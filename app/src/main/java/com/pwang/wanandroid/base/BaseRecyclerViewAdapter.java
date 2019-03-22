@@ -1,6 +1,5 @@
 package com.pwang.wanandroid.base;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
@@ -23,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.pwang.wanandroid.R;
+import com.pwang.wanandroid.util.Utils;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -279,15 +279,19 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
     }
 
     public void addHeaderView(View header) {
-        addHeaderView(header, -1);
+        addHeaderView(header, -1, null);
     }
 
-    public void addHeaderView(View header, int index) {
-        addHeaderView(header, index, LinearLayout.VERTICAL);
+    public void addHeaderView(View header, LinearLayout.LayoutParams params) {
+        addHeaderView(header, -1, params);
+    }
+
+    public void addHeaderView(View header, int index, LinearLayout.LayoutParams params) {
+        addHeaderView(header, index, LinearLayout.VERTICAL, params);
     }
 
 
-    public void addHeaderView(View header, int index, int orientation) {
+    public void addHeaderView(View header, int index, int orientation, LinearLayout.LayoutParams params) {
         if (mHeaderLayout == null) {
             mHeaderLayout = new LinearLayout(header.getContext());
             if (orientation == LinearLayout.VERTICAL) {
@@ -296,6 +300,20 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
             } else {
                 mHeaderLayout.setOrientation(LinearLayout.HORIZONTAL);
                 mHeaderLayout.setLayoutParams(new LinearLayout.LayoutParams(WRAP_CONTENT, MATCH_PARENT));
+            }
+
+            if (params == null){
+                /* 添加的一些默认属性*/
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                layoutParams.topMargin = (int) mHeaderLayout.getContext().getResources().getDimension(R.dimen.dp50);
+                mHeaderLayout.setLayoutParams(layoutParams);
+                mHeaderLayout.setPadding(Utils.dip2px(mHeaderLayout.getContext().getResources().getDimension(R.dimen.dp0)),
+                        Utils.dip2px(mHeaderLayout.getContext().getResources().getDimension(R.dimen.dp3)),
+                        Utils.dip2px(mHeaderLayout.getContext().getResources().getDimension(R.dimen.dp0)),
+                        Utils.dip2px(mHeaderLayout.getContext().getResources().getDimension(R.dimen.dp0)));
+            }else {
+                mHeaderLayout.setLayoutParams(params);
             }
         }
         final int childCount = mHeaderLayout.getChildCount();
@@ -309,14 +327,19 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
     }
 
     public void addFooterView(View header) {
-        addHeaderView(header, -1);
+        addFooterView(header, -1, null);
     }
 
-    public void addFooterView(View header, int index) {
-        addHeaderView(header, index, LinearLayout.VERTICAL);
+    public void addFooterView(View header, LinearLayout.LayoutParams params) {
+        addFooterView(header, -1, params);
     }
 
-    public void addFooterView(View footer, int index, int orientation) {
+    public void addFooterView(View header, int index, LinearLayout.LayoutParams params) {
+        addFooterView(header, index, LinearLayout.VERTICAL, params);
+    }
+
+
+    public void addFooterView(View footer, int index, int orientation, LinearLayout.LayoutParams params) {
         if (mFooterLayout == null) {
             mFooterLayout = new LinearLayout(footer.getContext());
             if (orientation == LinearLayout.VERTICAL) {
@@ -325,6 +348,18 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
             } else {
                 mFooterLayout.setOrientation(LinearLayout.HORIZONTAL);
                 mFooterLayout.setLayoutParams(new RecyclerView.LayoutParams(WRAP_CONTENT, MATCH_PARENT));
+            }
+
+            if (params == null){
+                /* 添加的一些默认属性*/
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                layoutParams.topMargin = (int) mFooterLayout.getContext().getResources().getDimension(R.dimen.dp10);
+                mFooterLayout.setLayoutParams(layoutParams);
+                mFooterLayout.setPadding(Utils.dip2px(mFooterLayout.getContext().getResources().getDimension(R.dimen.dp3)),
+                        Utils.dip2px(mFooterLayout.getContext().getResources().getDimension(R.dimen.dp0)),
+                        Utils.dip2px(mFooterLayout.getContext().getResources().getDimension(R.dimen.dp3)),
+                        Utils.dip2px(mFooterLayout.getContext().getResources().getDimension(R.dimen.dp0)));
             }
         }
         final int childCount = mFooterLayout.getChildCount();
