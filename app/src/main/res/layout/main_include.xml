@@ -26,7 +26,8 @@
         android:layout_gravity="bottom"
         android:background="@android:color/white"
         app:elevation="@dimen/dp8"
-        app:menu="@menu/main_bottom_nav_item">
+        app:menu="@menu/main_bottom_nav_item"
+        app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior">
     </android.support.design.widget.BottomNavigationView>
 
 </android.support.design.widget.CoordinatorLayout>

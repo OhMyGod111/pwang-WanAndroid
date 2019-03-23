@@ -6,8 +6,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -150,6 +148,10 @@ public class HomePageFragment extends BaseFragment<HomePagePresenter> implements
 
         @Override
         protected void convert(VH holder, ArticleDetail item) {
+//            Logger.d("Position:" + holder.getAdapterPosition()
+//                    + " ### ItemViewType:" + holder.getItemViewType()
+//                    + " ### ItemTitle:" + item.getTitle()
+//                    + " ### ArticleDetail: " + item);
             switch (holder.getItemViewType()) {
                 case 0:
                     break;

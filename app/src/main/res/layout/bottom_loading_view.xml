@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp40">
+    android:layout_height="@dimen/dp50"
+    android:padding="@dimen/dp10">
 
     <LinearLayout
         android:id="@+id/ll_loading"
@@ -14,9 +15,8 @@
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dp20"
-            android:indeterminateTint="?attr/colorPrimaryDark"
-            android:indeterminateTintMode="src_over" />
+            android:layout_marginEnd="@dimen/dp10"
+            android:indeterminateTint="?attr/colorPrimaryDark"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -24,7 +24,7 @@
             android:layout_gravity="center_vertical"
             android:text="@string/loading_desc"
             android:textColor="?attr/colorPrimaryDark"
-            android:textSize="@dimen/font_extra_small_size" />
+            android:textSize="@dimen/font_small_size" />
     </LinearLayout>
 
     <LinearLayout

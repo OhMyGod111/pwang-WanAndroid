@@ -67,6 +67,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
     private LinearLayout mFooterLayout;
     //endregion
 
+    // 默认的下拉加载布局
     private AbstractLoadingView mLoadingView = new DefaultLoadingView();
 
     /**
@@ -130,6 +131,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
         int viewType = vh.getItemViewType();
         switch (viewType) {
             case LOADING_VIEW:
+                mLoadingView.setLoadStatus(AbstractLoadingView.LOADING);
                 mLoadingView.convert(vh);
                 break;
             case HEADER_VIEW:
@@ -137,15 +139,44 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
             case FOOTER_VIEW:
                 break;
             default:
-                convert(vh, getDataItemByPos(position));
+                convert(vh, getDataItemByPos(position - getHeaderLayoutCount()));
                 break;
         }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        int headerCount = getHeaderLayoutCount();
+        if (position < headerCount) return HEADER_VIEW;
+        else {
+            // range 处在数据区域之内 也就是mData.size()范围之内，超出这个范围就是footer的区域了或者 LoadingView区域
+            int range = position - headerCount;
+            if (range < mData.size()) return getMultiDataViewType(position);
+            else {
+                // 此时的 range 处在数据区域之外 range > mData.size()
+                // 如果此时 range = range - mData.size() = 0 处在最后的位置
+                range = range - mData.size();
+                int footerCount = getFooterLayoutCount();
+                if (range < footerCount) return FOOTER_VIEW;
+                else return LOADING_VIEW;
+            }
+        }
+    }
+
+    /**
+     * 用于获取不同数据对应Item的布局类型, 如果存在多种布局类型请务必重写此方法
+     *
+     * @param position Item 对应的位置
+     * @return 根据业务返回的布局类型
+     */
+    protected int getMultiDataViewType(int position) {
+        return DEFAULT_VIEW_TYPE;
     }
 
     protected abstract void convert(VH holder, T item);
 
     /**
-     * 通过index获取条目的数据
+     * 通过position获取条目的数据
      *
      * @param position position
      * @return 数据
@@ -160,7 +191,8 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
 
     @Override
     public int getItemCount() {
-        return mData.size() + getFooterLayoutCount() + getHeaderLayoutCount();
+        // + 1 代表一个还有一个上拉加载布局
+        return mData.size() + getFooterLayoutCount() + getHeaderLayoutCount() + 1;
     }
 
     /**
@@ -212,38 +244,6 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
             mData.addAll(data);
         }
         notifyDataSetChanged();
-    }
-
-
-    @Override
-    public int getItemViewType(int position) {
-        int headerCount = getHeaderLayoutCount();
-        if (position < headerCount) return HEADER_VIEW;
-        else {
-            // range 处在数据区域之内 也就是mData.size()范围之内，超出这个范围就是footer的区域了
-            int range = position - headerCount;
-            if (range < mData.size()) return getMultiDataViewType(position);
-            else {
-                // 此时的 range 处在数据区域之外 range > mData.size()
-                // 如果此时 range = range - mData.size() = 0 处在最后的位置
-                range = range - mData.size();
-                int footerCount = getFooterLayoutCount();
-                if (range < footerCount)
-                    return FOOTER_VIEW;
-                else
-                    return LOADING_VIEW;
-            }
-        }
-    }
-
-    /**
-     * 用于获取不同数据对应Item的布局类型, 如果存在多种布局类型请务必重写此方法
-     *
-     * @param position Item 对应的位置
-     * @return 根据业务返回的布局类型
-     */
-    protected int getMultiDataViewType(int position) {
-        return DEFAULT_VIEW_TYPE;
     }
 
     /**
