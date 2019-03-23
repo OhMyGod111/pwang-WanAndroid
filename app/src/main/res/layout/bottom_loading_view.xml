@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <View
             android:layout_width="@dimen/dp0"

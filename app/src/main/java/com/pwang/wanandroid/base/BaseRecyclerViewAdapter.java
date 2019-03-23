@@ -131,6 +131,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
         int viewType = vh.getItemViewType();
         switch (viewType) {
             case LOADING_VIEW:
+                if (mData.isEmpty()) break;
                 mLoadingView.setLoadStatus(AbstractLoadingView.LOADING);
                 mLoadingView.convert(vh);
                 break;
