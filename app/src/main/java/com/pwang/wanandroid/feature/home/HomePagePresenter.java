@@ -10,13 +10,12 @@ import com.pwang.wanandroid.data.DataManager;
 import com.pwang.wanandroid.data.network.entity.ArticleList;
 import com.pwang.wanandroid.data.network.entity.Banner;
 import com.pwang.wanandroid.data.network.entity.BaseResponse;
-import com.pwang.wanandroid.di.scoped.ActivityScoped;
 import com.pwang.wanandroid.util.RxUtils;
+import com.pwang.wanandroid.util.Utils;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -43,7 +42,7 @@ public final class HomePagePresenter extends AbstractPresenter<HomePageContract.
 
     @Inject
     HomePagePresenter(DataManager dataManager) {
-        Objects.requireNonNull(dataManager,"dataManager cannot be null");
+        Utils.requireNonNull(dataManager,"dataManager cannot be null");
         this.dataManager = dataManager;
     }
 

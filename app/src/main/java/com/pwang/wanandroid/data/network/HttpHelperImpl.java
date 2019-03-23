@@ -3,9 +3,9 @@ package com.pwang.wanandroid.data.network;
 import com.pwang.wanandroid.data.network.entity.ArticleList;
 import com.pwang.wanandroid.data.network.entity.Banner;
 import com.pwang.wanandroid.data.network.entity.BaseResponse;
+import com.pwang.wanandroid.util.Utils;
 
 import java.util.List;
-import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -27,7 +27,7 @@ public class HttpHelperImpl implements HttpHelper {
 
     @Inject
     public HttpHelperImpl(ApiService apiService) {
-        Objects.requireNonNull(apiService, "apiService cannot be null");
+        Utils.requireNonNull(apiService, "apiService cannot be null");
         this.apiService = apiService;
     }
 

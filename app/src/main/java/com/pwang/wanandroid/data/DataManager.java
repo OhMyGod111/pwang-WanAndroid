@@ -4,9 +4,9 @@ import com.pwang.wanandroid.data.network.HttpHelper;
 import com.pwang.wanandroid.data.network.entity.ArticleList;
 import com.pwang.wanandroid.data.network.entity.Banner;
 import com.pwang.wanandroid.data.network.entity.BaseResponse;
+import com.pwang.wanandroid.util.Utils;
 
 import java.util.List;
-import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -29,7 +29,7 @@ public class DataManager implements HttpHelper {
 
     @Inject
     public DataManager(HttpHelper httpHelper) {
-        Objects.requireNonNull(httpHelper,"httpHelper cannot be null ");
+        Utils.requireNonNull(httpHelper,"httpHelper cannot be null ");
         this.mHttpHelper = httpHelper;
     }
 
