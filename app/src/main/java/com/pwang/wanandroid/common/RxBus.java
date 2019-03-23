@@ -10,4 +10,6 @@ package com.pwang.wanandroid.common;
  * </pre>
  */
 public final class RxBus {
+    private RxBus() {
+    }
 }
