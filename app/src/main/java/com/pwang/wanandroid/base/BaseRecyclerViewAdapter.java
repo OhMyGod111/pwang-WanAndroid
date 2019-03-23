@@ -17,6 +17,8 @@ import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -95,27 +97,38 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
         switch (viewType) {
             case HEADER_VIEW:
                 view = mHeaderLayout;
-                break;
+                return new VH(view);
             case FOOTER_VIEW:
                 view = mFooterLayout;
-                break;
+                return new VH(view);
             case LOADING_VIEW:
                 return new VH(inflate(mLoadingView.getLoadingViewLayout(), viewGroup));
             default:
                 view = inflate(getLayoutId(viewType), viewGroup);
-                break;
+                VH vh = new VH(view);
+                if (mOnItemClickListener != null) {
+                    view.setOnClickListener(v -> mOnItemClickListener.onItemClick(
+                            BaseRecyclerViewAdapter.this,
+                            view, vh.getLayoutPosition() - getHeaderLayoutCount()));
+
+                    if (mOnItemLongClickListener != null) {
+                        view.setOnLongClickListener(v -> mOnItemLongClickListener.onItemLongClick(
+                                BaseRecyclerViewAdapter.this,
+                                view, vh.getLayoutPosition() - getHeaderLayoutCount()));
+                    }
+                }
+                return vh;
         }
-        return new VH(view);
     }
 
-    private View inflate(@LayoutRes int resource, ViewGroup root){
+    private View inflate(@LayoutRes int resource, ViewGroup root) {
         return mLayoutInflater.inflate(resource, root, false);
     }
 
     @Override
     public void onBindViewHolder(@NonNull VH vh, int position) {
         int viewType = vh.getItemViewType();
-        switch (viewType){
+        switch (viewType) {
             case LOADING_VIEW:
                 mLoadingView.convert(vh);
                 break;
@@ -236,7 +249,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
     /**
      * 添加多种布局类型
      *
-     * @param key 这个key应该写入 viewType 的类型
+     * @param key         这个key应该写入 viewType 的类型
      * @param layoutResId 相应 viewType 类型的布局
      * @return
      */
@@ -245,11 +258,11 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
         return this;
     }
 
-    public void setLoadingView(@NonNull AbstractLoadingView loadingView){
+    public void setLoadingView(@NonNull AbstractLoadingView loadingView) {
         this.mLoadingView = loadingView;
     }
 
-    public void setLoadingStatus(@LoadStatus int status){
+    public void setLoadingStatus(@LoadStatus int status) {
         this.mLoadingView.setLoadStatus(status);
         notifyDataSetChanged();
     }
@@ -302,7 +315,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
                 mHeaderLayout.setLayoutParams(new LinearLayout.LayoutParams(WRAP_CONTENT, MATCH_PARENT));
             }
 
-            if (params == null){
+            if (params == null) {
                 /* 添加的一些默认属性*/
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -313,7 +326,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
                         Utils.dip2px(mHeaderLayout.getContext().getResources().getDimension(R.dimen.dp3)),
                         Utils.dip2px(mHeaderLayout.getContext().getResources().getDimension(R.dimen.dp0)),
                         Utils.dip2px(mHeaderLayout.getContext().getResources().getDimension(R.dimen.dp0)));
-            }else {
+            } else {
                 mHeaderLayout.setLayoutParams(params);
             }
         }
@@ -351,7 +364,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
                 mFooterLayout.setLayoutParams(new RecyclerView.LayoutParams(WRAP_CONTENT, MATCH_PARENT));
             }
 
-            if (params == null){
+            if (params == null) {
                 /* 添加的一些默认属性*/
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -386,6 +399,15 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
 
         public VH setAdapter(BaseRecyclerViewAdapter adapter) {
             this.adapter = adapter;
+            return this;
+        }
+
+        public VH setAdapter(@IdRes int viewId, Adapter adapter) {
+            View view = getView(viewId);
+            if (view instanceof AdapterView)
+                ((AdapterView)view).setAdapter(adapter);
+            else
+                throw new IllegalArgumentException("An instance of viewId is not an AdapterView !");
             return this;
         }
 
@@ -478,6 +500,36 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
             return this;
         }
 
+        /**
+         *  条目中对应View选择事件
+         * @param viewId view id
+         * @param listener 监听事件
+         * @return
+         */
+        public VH setOnItemSelectedClickListener(@IdRes int viewId, AdapterView.OnItemSelectedListener listener){
+            View view = getView(viewId);
+            if (view instanceof AdapterView)
+                ((AdapterView)view).setOnItemSelectedListener(listener);
+            else
+                throw new IllegalArgumentException("An instance of viewId is not an AdapterView !");
+            return this;
+        }
+
+        /**
+         *  条目中对应View长点击事件
+         * @param viewId view id
+         * @param listener 监听事件
+         * @return
+         */
+        public VH setOnItemLongClickListener(@IdRes int viewId, AdapterView.OnItemLongClickListener listener){
+            View view = getView(viewId);
+            if (view instanceof AdapterView)
+                ((AdapterView)view).setOnItemLongClickListener(listener);
+            else
+                throw new IllegalArgumentException("An instance of viewId is not an AdapterView !");
+            return this;
+        }
+
         public <T extends View> T getView(@IdRes int viewId) {
             View view = views.get(viewId);
             if (view == null) {
@@ -501,7 +553,8 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
             AbstractLoadingView.LOADING_FAIL})
     @Retention(RetentionPolicy.SOURCE)
     @Target(ElementType.PARAMETER)
-    @interface LoadStatus{}
+    @interface LoadStatus {
+    }
 
     public static abstract class AbstractLoadingView {
         // 正在加载
@@ -532,7 +585,8 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
             }
         }
 
-        abstract @LayoutRes int getLoadingViewLayout();
+        abstract @LayoutRes
+        int getLoadingViewLayout();
 
         abstract void visibleLoadEnd(VH holder);
 
@@ -542,12 +596,12 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
 
         abstract void visibleFail(VH holder);
 
-        public void setLoadStatus(@LoadStatus int status){
+        public void setLoadStatus(@LoadStatus int status) {
             this.loadingStatus = status;
         }
     }
 
-    public static class DefaultLoadingView extends AbstractLoadingView{
+    public static class DefaultLoadingView extends AbstractLoadingView {
 
         @Override
         int getLoadingViewLayout() {
@@ -668,7 +722,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
         mOnItemLongClickListener = listener;
     }
 
-    public void setmOnLoadMoreListener(OnLoadMoreListener mOnLoadMoreListener) {
+    public void setOnLoadMoreListener(OnLoadMoreListener mOnLoadMoreListener) {
         this.mOnLoadMoreListener = mOnLoadMoreListener;
     }
 

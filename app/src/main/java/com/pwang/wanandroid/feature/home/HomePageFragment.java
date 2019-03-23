@@ -6,11 +6,14 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.orhanobut.logger.Logger;
 import com.pwang.wanandroid.R;
 import com.pwang.wanandroid.base.BaseFragment;
 import com.pwang.wanandroid.base.BaseRecyclerViewAdapter;
@@ -58,7 +61,7 @@ public class HomePageFragment extends BaseFragment<HomePagePresenter> implements
 
     @Override
     public void showHintMsg(String msg) {
-
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -104,6 +107,11 @@ public class HomePageFragment extends BaseFragment<HomePagePresenter> implements
 //        mRecyclerView.addItemDecoration(new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.HORIZONTAL));
         mAdapter = new ArticleAdapter(R.layout.home_page__recycle_item);
         mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            Logger.d("adapter:" + adapter.getClass().getName() +
+                    "view:" + view.getClass().getName() +
+                    "position:" + position);
+        });
 
         @SuppressLint("InflateParams") LinearLayout linearLayout  = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.home_page_banner, null);
         this.mBanner = linearLayout.findViewById(R.id.banner);
@@ -126,7 +134,7 @@ public class HomePageFragment extends BaseFragment<HomePagePresenter> implements
 
     OnBannerListener onBannerListener = position -> {
         Banner banner = ((List<Banner>) mBanner.getTag()).get(position);
-        Toast.makeText(getContext(), "Banner:" + banner.getTitle(), Toast.LENGTH_SHORT).show();
+        showHintMsg("Banner:" + banner.getTitle());
     };
 
     @Override
@@ -155,6 +163,11 @@ public class HomePageFragment extends BaseFragment<HomePagePresenter> implements
                     holder.setText(R.id.tv_date, item.getNiceDate());
                     holder.setText(R.id.tv_title, item.getTitle());
                     holder.setText(R.id.tv_label, item.getSuperChapterName());
+                    holder.getView(R.id.iv_collect).setOnClickListener(v -> {
+                        Logger.d("v:" + v.getClass().getName());
+                        if (v.isSelected()) v.setSelected(false);
+                        else v.setSelected(true);
+                    });
                     break;
             }
         }
