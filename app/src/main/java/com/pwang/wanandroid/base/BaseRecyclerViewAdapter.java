@@ -60,6 +60,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
     private static final int FOOTER_VIEW = 0x001112;
     private static final int LOADING_VIEW = 0x001113;
     private static final int DEFAULT_VIEW_TYPE = 0x001114;
+    private static final int EMPTY_VIEW_TYPE = 0x001115;
     private static final int TYPE_NOT_FOUND = -404;
 
     //region 头布局、脚布局
@@ -104,6 +105,9 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
                 return new VH(view);
             case LOADING_VIEW:
                 return new VH(inflate(mLoadingView.getLoadingViewLayout(), viewGroup));
+            case EMPTY_VIEW_TYPE:
+                // TODO: 2019/3/24  EMPTY_VIEW 目前不做处理，也不添加自定义的 EMPTY_VIEW
+                return new VH(new View(viewGroup.getContext()));
             default:
                 view = inflate(getLayoutId(viewType), viewGroup);
                 VH vh = new VH(view);
@@ -131,12 +135,12 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
         int viewType = vh.getItemViewType();
         switch (viewType) {
             case LOADING_VIEW:
-                if (mData.isEmpty()) break;
                 mLoadingView.setLoadStatus(AbstractLoadingView.LOADING);
                 mLoadingView.convert(vh);
                 break;
             case HEADER_VIEW:
                 break;
+            case EMPTY_VIEW_TYPE:
             case FOOTER_VIEW:
                 break;
             default:
@@ -147,6 +151,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
 
     @Override
     public int getItemViewType(int position) {
+        if (mData.isEmpty()) return EMPTY_VIEW_TYPE;
         int headerCount = getHeaderLayoutCount();
         if (position < headerCount) return HEADER_VIEW;
         else {
