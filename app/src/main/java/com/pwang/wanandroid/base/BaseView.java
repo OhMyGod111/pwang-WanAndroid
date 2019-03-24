@@ -10,10 +10,4 @@ package com.pwang.wanandroid.base;
  * </pre>
  */
 public interface BaseView <T>{
-
-    /**
-     *
-     * @param type
-     */
-    void showErrorPage(int type);
 }
