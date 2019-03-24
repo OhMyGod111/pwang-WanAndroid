@@ -375,6 +375,8 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
                         Utils.dip2px(mFooterLayout.getContext().getResources().getDimension(R.dimen.dp0)),
                         Utils.dip2px(mFooterLayout.getContext().getResources().getDimension(R.dimen.dp3)),
                         Utils.dip2px(mFooterLayout.getContext().getResources().getDimension(R.dimen.dp0)));
+            }else {
+                mFooterLayout.setLayoutParams(params);
             }
         }
         final int childCount = mFooterLayout.getChildCount();
