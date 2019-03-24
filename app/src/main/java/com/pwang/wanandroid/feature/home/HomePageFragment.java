@@ -69,6 +69,7 @@ public class HomePageFragment extends BaseFragment<HomePagePresenter> implements
 
     @Override
     public void showBanners(List<Banner> banners) {
+        if (banners == null || banners.isEmpty()) return;
         ArrayList<String> imgUrls = new ArrayList<>();
         ArrayList<String> titles = new ArrayList<>();
         imgUrls.clear();
@@ -109,6 +110,10 @@ public class HomePageFragment extends BaseFragment<HomePagePresenter> implements
             Logger.d("adapter:" + adapter.getClass().getName() +
                     "view:" + view.getClass().getName() +
                     "position:" + position);
+        });
+
+        mAdapter.setOnLoadMoreListener(() -> {
+            Logger.d("setOnLoadMoreListener: 加载更多！");
         });
 
         @SuppressLint("InflateParams") LinearLayout linearLayout  = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.home_page_banner, null);

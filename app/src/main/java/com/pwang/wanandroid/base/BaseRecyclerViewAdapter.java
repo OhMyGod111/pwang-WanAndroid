@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.orhanobut.logger.Logger;
 import com.pwang.wanandroid.R;
 import com.pwang.wanandroid.util.Utils;
 
@@ -159,10 +160,17 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
             int range = position - headerCount;
             if (range < mData.size()) return getMultiDataViewType(position);
             else {
+//                Logger.d("before-range:" + range + " ### headerCount:" + headerCount
+//                        + " ### position:" + position + " ### DataSize:" + mData.size());
+
                 // 此时的 range 处在数据区域之外 range > mData.size()
                 // 如果此时 range = range - mData.size() = 0 处在最后的位置
                 range = range - mData.size();
                 int footerCount = getFooterLayoutCount();
+
+//                Logger.d("after-range:" + range + " ### footerCount: " + footerCount
+//                        + " ### position: " + position);
+
                 if (range < footerCount) return FOOTER_VIEW;
                 else return LOADING_VIEW;
             }
@@ -199,6 +207,34 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
     public int getItemCount() {
         // + 1 代表一个还有一个上拉加载布局
         return mData.size() + getFooterLayoutCount() + getHeaderLayoutCount() + 1;
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                int loadingStatus = mLoadingView.getLoadingStatus();
+                if (newState == RecyclerView.SCROLL_STATE_IDLE &&
+                        loadingStatus == AbstractLoadingView.LOADING){
+                    if (mOnLoadMoreListener != null){
+                        mOnLoadMoreListener.onLoadMoreRequested();
+                    }
+                }
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        recyclerView.clearOnScrollListeners();
     }
 
     /**
@@ -606,6 +642,10 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
 
         public void setLoadStatus(@LoadStatus int status) {
             this.loadingStatus = status;
+        }
+
+        public int getLoadingStatus() {
+            return loadingStatus;
         }
     }
 
