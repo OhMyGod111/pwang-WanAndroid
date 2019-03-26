@@ -4,10 +4,8 @@ import android.os.Bundle;
 
 import com.pwang.wanandroid.R;
 import com.pwang.wanandroid.base.BaseFragment;
-import com.pwang.wanandroid.di.scoped.ActivityScoped;
 
 import javax.inject.Inject;
-import javax.inject.Qualifier;
 
 /**
  * <pre>

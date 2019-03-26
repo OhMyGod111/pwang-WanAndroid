@@ -18,19 +18,13 @@ import java.util.List;
  */
 public interface HomePageContract {
 
-    interface View extends BaseView<Presenter> {
+    interface View extends BaseView {
 
         /**
          *  加载指示器
          * @param active true 显示，else 隐藏
          */
         void setLoadingIndicator(boolean active);
-
-        /**
-         *  显示提示信息
-         * @param msg
-         */
-        void showHintMsg(String msg);
 
         /**
          *  显示首页文章列表

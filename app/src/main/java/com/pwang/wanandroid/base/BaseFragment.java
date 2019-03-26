@@ -6,7 +6,9 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.orhanobut.logger.Logger;
 import com.pwang.wanandroid.common.ErrorPageType;
 
 import javax.inject.Inject;
@@ -24,7 +26,7 @@ import dagger.android.support.DaggerFragment;
  *     version: 1.0
  * </pre>
  */
-public abstract class BaseFragment <T extends BasePresenter> extends DaggerFragment {
+public abstract class BaseFragment <T extends BasePresenter> extends DaggerFragment implements BaseView{
 
     Unbinder unbinder;
 
@@ -84,12 +86,22 @@ public abstract class BaseFragment <T extends BasePresenter> extends DaggerFragm
      *  统一处理异常页面
      * @param type 异常页面类型  {@link ErrorPageType}
      */
+    @Override
     public void showErrorPage(@ErrorPageType int type){
         switch (type){
             case ErrorPageType.NET_ERROR_TYPE:
+                View view = getView();
+                Logger.d("view:" + view.getClass().getName());
                 break;
             case ErrorPageType.NO_DATA_TYPE:
                 break;
+        }
+    }
+
+    @Override
+    public void showPromptMessage(String msg) {
+        if (isAdded()){
+            Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
         }
     }
 }

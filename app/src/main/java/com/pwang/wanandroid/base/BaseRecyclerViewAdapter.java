@@ -136,7 +136,9 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
         int viewType = vh.getItemViewType();
         switch (viewType) {
             case LOADING_VIEW:
-                mLoadingView.setLoadStatus(AbstractLoadingView.LOADING);
+                if (position == mData.size() + 1)
+                    mLoadingView.setLoadStatus(AbstractLoadingView.LOADING);
+                else mLoadingView.setLoadStatus(AbstractLoadingView.LOADING_COMPLETE);
                 mLoadingView.convert(vh);
                 break;
             case HEADER_VIEW:
@@ -246,6 +248,10 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
         return mData;
     }
 
+    /**
+     *  设置 Adapter 数据，此时会刷新整个页面布局,
+     * @param data
+     */
     public void setData(@Nullable List<T> data) {
         if (mData != null) mData.clear();
         this.mData = data == null ? new ArrayList<>() : data;
@@ -262,6 +268,11 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
         notifyItemInserted(position + getHeaderLayoutCount());
     }
 
+    /**
+     * 往Adapter数据容器中添加新数据。
+     *
+     * @param data 数据容器
+     */
     public void addData(@NonNull Collection<? extends T> data) {
         this.mData.addAll(data);
         notifyItemRangeInserted(mData.size() - data.size() + getHeaderLayoutCount(),
@@ -300,6 +311,10 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
         return this;
     }
 
+    /**
+     *  设置自定义的底部LoadingView， 需要继承 AbstractLoadingView 实现它的抽象方法
+     * @param loadingView 具体实现类
+     */
     public void setLoadingView(@NonNull AbstractLoadingView loadingView) {
         this.mLoadingView = loadingView;
     }

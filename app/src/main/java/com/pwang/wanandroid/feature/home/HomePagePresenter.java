@@ -42,7 +42,7 @@ public final class HomePagePresenter extends AbstractPresenter<HomePageContract.
 
     @Inject
     HomePagePresenter(DataManager dataManager) {
-        Utils.requireNonNull(dataManager,"dataManager cannot be null");
+        Utils.requireNonNull(dataManager, "dataManager cannot be null");
         this.dataManager = dataManager;
     }
 
@@ -57,6 +57,7 @@ public final class HomePagePresenter extends AbstractPresenter<HomePageContract.
 
     @Override
     public void dropView() {
+        super.dropView();
         Logger.d("dropView");
     }
 
@@ -74,36 +75,64 @@ public final class HomePagePresenter extends AbstractPresenter<HomePageContract.
         }
 
         // 强制更新，用户手动操作的
-        if (forceUpdate){
-            mCurrentPage ++;
+        if (forceUpdate) {
+            mCurrentPage++;
         }
 
-        // 处理数据
-        Observable<BaseResponse<List<Banner>>> homePageBanner = dataManager.getHomePageBanner();
-        Observable<BaseResponse<ArticleList>> homePageArticleList = dataManager.getHomePageArticleList(mCurrentPage);
+        if (mFirstLoad) {
+            // 处理数据
+            Observable<BaseResponse<List<Banner>>> homePageBanner = dataManager.getHomePageBanner();
+            Observable<BaseResponse<ArticleList>> homePageArticleList = dataManager.getHomePageArticleList(mCurrentPage);
+            addDisposable(Observable.zip(homePageBanner, homePageArticleList, this::createResponseMap)
+                    .compose(RxUtils.schedulersTransformer()).subscribeWith(new BaseObserver<Map<String, Object>>(mView) {
+                        @Override
+                        public void onNext(Map<String, Object> map) {
+                            mView.setLoadingIndicator(false);
+                            BaseResponse<List<Banner>> bannerBaseResponse = (BaseResponse<List<Banner>>) map.get(KEY_BANNER_DATA);
+                            BaseResponse<ArticleList> articleListBaseResponse = (BaseResponse<ArticleList>) map.get(KEY_ARTICLE_DATA);
 
-        addDisposable(Observable.zip(homePageBanner, homePageArticleList, this::createResponseMap)
-                .compose(RxUtils.schedulersTransformer()).subscribeWith(new BaseObserver<Map<String, Object>>() {
-                    @Override
-                    public void onNext(Map<String, Object> map) {
-                        mView.setLoadingIndicator(false);
-                        BaseResponse<List<Banner>> bannerBaseResponse = (BaseResponse<List<Banner>>) map.get(KEY_BANNER_DATA);
-                        BaseResponse<ArticleList> articleListBaseResponse = (BaseResponse<ArticleList>) map.get(KEY_ARTICLE_DATA);
+                            if (bannerBaseResponse == null || articleListBaseResponse == null) return;
 
-                        if (bannerBaseResponse != null) mView.showBanners(bannerBaseResponse.getData());
+                            int errorCode = bannerBaseResponse.getErrorCode();
+                            int errorCode1 = articleListBaseResponse.getErrorCode();
 
-                        if (articleListBaseResponse != null) mView.showArticles(articleListBaseResponse.getData().getDatas());
+                            if (errorCode != 0 && errorCode1 != 0){
+                                /* 处理数据获取的异常code */
+                                String errorMsg_banner = bannerBaseResponse.getErrorMsg();
+                                String errorMsg_article = articleListBaseResponse.getErrorMsg();
+                                mView.showPromptMessage(errorMsg_banner + " \n " + errorMsg_article);
+                                return;
+                            }
+
+                            mView.showBanners(bannerBaseResponse.getData());
+
+                            mView.showArticles(articleListBaseResponse.getData().getDatas());
+                        }
+                    }));
+        }else {
+            Observable<BaseResponse<ArticleList>> homePageArticleList = dataManager.getHomePageArticleList(mCurrentPage);
+            addDisposable(homePageArticleList.compose(RxUtils.schedulersTransformer()).subscribeWith(new BaseObserver<BaseResponse<ArticleList>>(mView) {
+                @Override
+                public void onNext(BaseResponse<ArticleList> articleListBaseResponse) {
+                    mView.setLoadingIndicator(false);
+                    int errorCode = articleListBaseResponse.getErrorCode();
+                    if (errorCode != 0){
+                        /* 处理数据获取的异常code */
+                        String errorMsg = articleListBaseResponse.getErrorMsg();
+                        mView.showPromptMessage(errorMsg);
+                        return;
                     }
 
-                    @Override
-                    public void onError(Throwable e) {
+                    ArticleList articleList = articleListBaseResponse.getData();
+                    mView.showArticles(articleList.getDatas());
+                }
+            }));
+        }
 
-                    }
-                }));
     }
 
     @NonNull
-    private Map<String, Object> createResponseMap(BaseResponse<List<Banner>> banner, BaseResponse<ArticleList> article){
+    private Map<String, Object> createResponseMap(BaseResponse<List<Banner>> banner, BaseResponse<ArticleList> article) {
         HashMap<String, Object> map = new HashMap<>();
         map.put(KEY_BANNER_DATA, banner);
         map.put(KEY_ARTICLE_DATA, article);

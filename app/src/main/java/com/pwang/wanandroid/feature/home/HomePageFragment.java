@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.orhanobut.logger.Logger;
@@ -39,7 +38,7 @@ import butterknife.BindView;
  *     version: 1.0
  * </pre>
  */
-public class HomePageFragment extends BaseFragment<HomePagePresenter> implements HomePageContract.View {
+public class HomePageFragment extends BaseFragment<HomePagePresenter> implements HomePageContract.View{
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
@@ -58,13 +57,8 @@ public class HomePageFragment extends BaseFragment<HomePagePresenter> implements
     }
 
     @Override
-    public void showHintMsg(String msg) {
-        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
     public void showArticles(List<ArticleDetail> details) {
-        mAdapter.setData(details);
+        mAdapter.addData(details);
     }
 
     @Override
@@ -106,15 +100,8 @@ public class HomePageFragment extends BaseFragment<HomePagePresenter> implements
 //        mRecyclerView.addItemDecoration(new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.HORIZONTAL));
         mAdapter = new ArticleAdapter(R.layout.home_page__recycle_item);
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            Logger.d("adapter:" + adapter.getClass().getName() +
-                    "view:" + view.getClass().getName() +
-                    "position:" + position);
-        });
-
-        mAdapter.setOnLoadMoreListener(() -> {
-            Logger.d("setOnLoadMoreListener: 加载更多！");
-        });
+        mAdapter.setOnItemClickListener(onItemClickListener);
+        mAdapter.setOnLoadMoreListener(onLoadMoreListener);
 
         @SuppressLint("InflateParams") LinearLayout linearLayout  = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.home_page_banner, null);
         this.mBanner = linearLayout.findViewById(R.id.banner);
@@ -130,6 +117,12 @@ public class HomePageFragment extends BaseFragment<HomePagePresenter> implements
                 .isAutoPlay(true); // 设置自动轮播
     }
 
+    BaseRecyclerViewAdapter.OnItemClickListener onItemClickListener = (adapter, view, position) -> {
+        Logger.d("adapter:" + adapter.getClass().getName() +
+                "view:" + view.getClass().getName() +
+                "position:" + position);
+    };
+
     SwipeRefreshLayout.OnRefreshListener onRefreshListener = () -> {
 //        mSwipeRefreshLayout.setRefreshing(false);
         mPresenter.loadHomePageData(false);
@@ -137,7 +130,11 @@ public class HomePageFragment extends BaseFragment<HomePagePresenter> implements
 
     OnBannerListener onBannerListener = position -> {
         Banner banner = ((List<Banner>) mBanner.getTag()).get(position);
-        showHintMsg("Banner:" + banner.getTitle());
+        showPromptMessage("Banner:" + banner.getTitle());
+    };
+
+    BaseRecyclerViewAdapter.OnLoadMoreListener onLoadMoreListener = () -> {
+        mPresenter.loadHomePageData(true);
     };
 
     @Override

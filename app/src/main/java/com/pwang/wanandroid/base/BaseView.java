@@ -1,5 +1,7 @@
 package com.pwang.wanandroid.base;
 
+import com.pwang.wanandroid.common.ErrorPageType;
+
 /**
  * <pre>
  *     author : Wang Pan
@@ -9,5 +11,17 @@ package com.pwang.wanandroid.base;
  *     version: 1.0
  * </pre>
  */
-public interface BaseView <T>{
+public interface BaseView{
+
+    /**
+     *  显示提示信息
+     * @param msg
+     */
+    void showPromptMessage(String msg);
+
+    /**
+     *
+     * @param type
+     */
+    void showErrorPage(@ErrorPageType int type);
 }

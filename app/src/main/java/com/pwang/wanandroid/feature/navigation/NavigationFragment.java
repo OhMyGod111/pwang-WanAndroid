@@ -30,4 +30,9 @@ public class NavigationFragment extends BaseFragment <NavigationPresenter> imple
     protected int getLayoutId() {
         return R.layout.navigation_page_fragment;
     }
+
+    @Override
+    public void showPromptMessage(String msg) {
+
+    }
 }
