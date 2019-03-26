@@ -69,8 +69,8 @@ public abstract class BaseObserver<T> extends ResourceObserver<T> {
         if (mBaseView == null) return;
 
         if (!TextUtils.isEmpty(mErrorMsg)){
-            mBaseView.showPromptMessage(e.getMessage());
-
+            mBaseView.showPromptMessage(mErrorMsg);
+            e.printStackTrace();
         }else{
             mBaseView.showPromptMessage(Utils.getAppContext().getString(R.string.unknown_error));
             e.printStackTrace();

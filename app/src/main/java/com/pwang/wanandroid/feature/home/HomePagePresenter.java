@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 
 import com.orhanobut.logger.Logger;
+import com.pwang.wanandroid.R;
 import com.pwang.wanandroid.base.AbstractPresenter;
 import com.pwang.wanandroid.common.BaseObserver;
 import com.pwang.wanandroid.data.DataManager;
@@ -84,7 +85,7 @@ public final class HomePagePresenter extends AbstractPresenter<HomePageContract.
             Observable<BaseResponse<List<Banner>>> homePageBanner = dataManager.getHomePageBanner();
             Observable<BaseResponse<ArticleList>> homePageArticleList = dataManager.getHomePageArticleList(mCurrentPage);
             addDisposable(Observable.zip(homePageBanner, homePageArticleList, this::createResponseMap)
-                    .compose(RxUtils.schedulersTransformer()).subscribeWith(new BaseObserver<Map<String, Object>>(mView) {
+                    .compose(RxUtils.schedulersTransformer()).subscribeWith(new BaseObserver<Map<String, Object>>(mView, null, true) {
                         @Override
                         public void onNext(Map<String, Object> map) {
                             mView.setLoadingIndicator(false);
@@ -111,7 +112,10 @@ public final class HomePagePresenter extends AbstractPresenter<HomePageContract.
                     }));
         }else {
             Observable<BaseResponse<ArticleList>> homePageArticleList = dataManager.getHomePageArticleList(mCurrentPage);
-            addDisposable(homePageArticleList.compose(RxUtils.schedulersTransformer()).subscribeWith(new BaseObserver<BaseResponse<ArticleList>>(mView) {
+            addDisposable(homePageArticleList.compose(RxUtils.schedulersTransformer())
+                    .subscribeWith(new BaseObserver<BaseResponse<ArticleList>>(mView,
+                            Utils.getAppContext().getString(R.string.home_page_get_article_fail),
+                                    false) {
                 @Override
                 public void onNext(BaseResponse<ArticleList> articleListBaseResponse) {
                     mView.setLoadingIndicator(false);

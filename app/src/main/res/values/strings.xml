@@ -22,4 +22,5 @@
     <string name="loading_fail_desc">数据加载失败</string>
     <string name="recycle_item_source_desc">文章来源</string>
     <string name="unknown_error">未知错误</string>
+    <string name="home_page_get_article_fail">获取文章列表数据失败</string>
 </resources>
