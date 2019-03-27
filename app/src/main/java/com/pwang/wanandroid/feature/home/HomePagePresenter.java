@@ -109,6 +109,13 @@ public final class HomePagePresenter extends AbstractPresenter<HomePageContract.
 
                             mView.showArticles(articleListBaseResponse.getData().getDatas());
                         }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            super.onError(e);
+                            mView.setLoadingIndicator(false);
+                            mFirstLoad = true;
+                        }
                     }));
         }else {
             Observable<BaseResponse<ArticleList>> homePageArticleList = dataManager.getHomePageArticleList(mCurrentPage);

@@ -23,4 +23,7 @@
     <string name="recycle_item_source_desc">文章来源</string>
     <string name="unknown_error">未知错误</string>
     <string name="home_page_get_article_fail">获取文章列表数据失败</string>
+    <string name="tv_net_error">网络正在开小差！</string>
+    <string name="btn_net_error_retry">请点击重试</string>
+    <string name="tv_no_data_error">没有数据，不晓得数据去哪儿了！</string>
 </resources>

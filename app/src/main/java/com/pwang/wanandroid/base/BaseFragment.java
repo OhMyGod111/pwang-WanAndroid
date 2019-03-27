@@ -3,12 +3,15 @@ package com.pwang.wanandroid.base;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.widget.Toast;
 
-import com.orhanobut.logger.Logger;
+import com.pwang.wanandroid.R;
 import com.pwang.wanandroid.common.ErrorPageType;
 
 import javax.inject.Inject;
@@ -32,6 +35,7 @@ public abstract class BaseFragment <T extends BasePresenter> extends DaggerFragm
 
     @Inject
     protected T mPresenter;
+    protected View mErrorPage;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,14 +92,26 @@ public abstract class BaseFragment <T extends BasePresenter> extends DaggerFragm
      */
     @Override
     public void showErrorPage(@ErrorPageType int type){
-        switch (type){
-            case ErrorPageType.NET_ERROR_TYPE:
-                View view = getView();
-                Logger.d("view:" + view.getClass().getName());
-                break;
-            case ErrorPageType.NO_DATA_TYPE:
-                break;
+        if (getView() == null) return;
+        ViewStub viewStub  = getView().findViewById(R.id.vb_fail_page);
+        if (viewStub != null) {
+            this.mErrorPage = viewStub.inflate();
+            View view = mErrorPage.findViewById(R.id.specific_fail_page);
+            switch (type){
+                case ErrorPageType.NET_ERROR_TYPE:
+//                    AppCompatTextView tvLabelName = view.findViewById(R.id.tv_label_name);
+                    AppCompatButton btnRetry = view.findViewById(R.id.btn_net_retry);
+                    btnRetry.setOnClickListener(v -> reloadData());
+                    break;
+                case ErrorPageType.NO_DATA_TYPE:
+                    AppCompatTextView labelName = view.findViewById(R.id.tv_label_name);
+                    labelName.setText(getString(R.string.tv_no_data_error));
+                    AppCompatButton retry = view.findViewById(R.id.btn_net_retry);
+                    retry.setOnClickListener(v -> reloadData());
+                    break;
+            }
         }
+
     }
 
     @Override
@@ -103,5 +119,17 @@ public abstract class BaseFragment <T extends BasePresenter> extends DaggerFragm
         if (isAdded()){
             Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    protected boolean isErrorPageShow(){
+        if (mErrorPage == null)return false;
+        return mErrorPage.getVisibility() == View.VISIBLE;
+    }
+
+    protected boolean hideErrorPage(){
+        if (mErrorPage == null) return false;
+        else if (mErrorPage.getVisibility() == View.VISIBLE) mErrorPage.setVisibility(View.GONE);
+        else mErrorPage.setVisibility(View.GONE);
+        return true;
     }
 }

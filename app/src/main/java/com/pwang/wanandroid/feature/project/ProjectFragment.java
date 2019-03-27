@@ -29,4 +29,9 @@ public class ProjectFragment extends BaseFragment <ProjectPresenter> implements 
     protected int getLayoutId() {
         return R.layout.project_page_fragment;
     }
+
+    @Override
+    public void reloadData() {
+
+    }
 }

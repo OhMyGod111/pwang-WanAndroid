@@ -23,7 +23,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.orhanobut.logger.Logger;
 import com.pwang.wanandroid.R;
 import com.pwang.wanandroid.util.Utils;
 
@@ -147,7 +146,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
             case FOOTER_VIEW:
                 break;
             default:
-                convert(vh, getDataItemByPos(position - getHeaderLayoutCount()));
+                convert(vh, getDataItemByPosition(position - getHeaderLayoutCount()));
                 break;
         }
     }
@@ -198,7 +197,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
      * @return 数据
      */
     @Nullable
-    public T getDataItemByPos(@IntRange(from = 0) int position) {
+    public T getDataItemByPosition(@IntRange(from = 0) int position) {
         if (position < mData.size())
             return mData.get(position);
         else

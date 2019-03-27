@@ -35,4 +35,9 @@ public class NavigationFragment extends BaseFragment <NavigationPresenter> imple
     public void showPromptMessage(String msg) {
 
     }
+
+    @Override
+    public void reloadData() {
+
+    }
 }

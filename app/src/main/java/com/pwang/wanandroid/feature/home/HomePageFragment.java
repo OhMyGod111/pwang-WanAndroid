@@ -52,17 +52,28 @@ public class HomePageFragment extends BaseFragment<HomePagePresenter> implements
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        if (mBanner != null) {
+            mBanner.stopAutoPlay();
+            mBanner = null;
+        }
+    }
+
+    @Override
     public void setLoadingIndicator(boolean active) {
         mSwipeRefreshLayout.setRefreshing(active);
     }
 
     @Override
     public void showArticles(List<ArticleDetail> details) {
+        if (details == null) return;
         mAdapter.addData(details);
     }
 
     @Override
     public void showBanners(List<Banner> banners) {
+        if (isErrorPageShow()) hideErrorPage();
         if (banners == null || banners.isEmpty()) return;
         ArrayList<String> imgUrls = new ArrayList<>();
         ArrayList<String> titles = new ArrayList<>();
@@ -74,15 +85,6 @@ public class HomePageFragment extends BaseFragment<HomePagePresenter> implements
         }
         mBanner.setBannerTitles(titles).setImages(imgUrls).start();
         mBanner.setTag(banners);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (mBanner != null) {
-            mBanner.stopAutoPlay();
-            mBanner = null;
-        }
     }
 
     @Override
@@ -105,8 +107,8 @@ public class HomePageFragment extends BaseFragment<HomePagePresenter> implements
 
         @SuppressLint("InflateParams") LinearLayout linearLayout  = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.home_page_banner, null);
         this.mBanner = linearLayout.findViewById(R.id.banner);
-        linearLayout.removeView(this.mBanner);
-        mAdapter.addHeaderView(this.mBanner);
+        linearLayout.removeView(mBanner);
+        mAdapter.addHeaderView(mBanner);
 
         this.mBanner.setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE) // banner 样式
                 .setBannerAnimation(Transformer.DepthPage)// 动画效果
@@ -140,6 +142,11 @@ public class HomePageFragment extends BaseFragment<HomePagePresenter> implements
     @Override
     protected int getLayoutId() {
         return R.layout.home_page_fragment;
+    }
+
+    @Override
+    public void reloadData() {
+        mPresenter.loadHomePageData(false);
     }
 
     static class ArticleAdapter extends BaseRecyclerViewAdapter<ArticleDetail> {

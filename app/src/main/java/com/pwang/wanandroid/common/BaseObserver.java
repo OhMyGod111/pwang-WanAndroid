@@ -51,10 +51,11 @@ public abstract class BaseObserver<T> extends ResourceObserver<T> {
 
         if (!NetworkUtils.isNetConnected()){
             /* 调用此函数，不会从网络缓存中拿取数据了 */
-//            this.dispose();
             mBaseView.showPromptMessage("不好意思，网络不通！");
+            mBaseView.showErrorPage(ErrorPageType.NET_ERROR_TYPE);
+//            this.dispose();
         }
-        Logger.d("onStart");
+        onComplete();
     }
 
     @Override

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_label_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tv_net_error"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/font_extra_large_size"
+        android:drawableTop="@mipmap/ic_launcher_round"
+        android:drawablePadding="@dimen/dp50"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_net_retry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="@dimen/dp50"
+        android:text="@string/btn_net_error_retry"
+        android:textSize="@dimen/font_medium_size"
+        android:elevation="@dimen/dp3"/>
+
+</LinearLayout>

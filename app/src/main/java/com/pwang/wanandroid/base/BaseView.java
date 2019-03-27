@@ -24,4 +24,9 @@ public interface BaseView{
      * @param type
      */
     void showErrorPage(@ErrorPageType int type);
+
+    /**
+     *  重新加载数据
+     */
+    void reloadData();
 }
