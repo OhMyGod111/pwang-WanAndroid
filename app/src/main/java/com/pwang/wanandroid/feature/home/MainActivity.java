@@ -153,16 +153,16 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (ev.getAction() == MotionEvent.ACTION_DOWN){
-            int[] position = new int[2];
-            mSearchView.getLocationInWindow(position);
-            int left   = position[0];
-            int top    = position[1];
-            int right  = left + mSearchView.getWidth();
-            int bottom = top + mSearchView.getHeight();
-            Rect rect = new Rect(left, top, right, bottom);
-            boolean contains = rect.contains((int) ev.getX(), (int) ev.getY());
-            if (!mSearchView.isIconified() && !contains) {
-                mSearchView.onActionViewCollapsed();
+            if (!mSearchView.isIconified()) {
+                int[] position = new int[2];
+                mSearchView.getLocationInWindow(position);
+                int left = position[0];
+                int top = position[1];
+                int right = left + mSearchView.getWidth();
+                int bottom = top + mSearchView.getHeight();
+                Rect rect = new Rect(left, top, right, bottom);
+                boolean contains = rect.contains((int) ev.getX(), (int) ev.getY());
+                if (!contains) mSearchView.onActionViewCollapsed();
             }
         }
         return super.dispatchTouchEvent(ev);
