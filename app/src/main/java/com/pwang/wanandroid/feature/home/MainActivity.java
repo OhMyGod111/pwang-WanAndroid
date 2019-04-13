@@ -26,9 +26,7 @@ import com.pwang.wanandroid.base.BaseActivity;
 import com.pwang.wanandroid.feature.knowledge.KnowledgeFragment;
 import com.pwang.wanandroid.feature.navigation.NavigationFragment;
 import com.pwang.wanandroid.feature.project.ProjectFragment;
-import com.pwang.wanandroid.util.ActivityUtils;
-
-import java.util.Objects;
+import com.pwang.wanandroid.util.Utils;
 
 import javax.inject.Inject;
 
@@ -151,7 +149,7 @@ public class MainActivity extends BaseActivity {
     @SuppressLint("NewApi")
     private void setupToolbar() {
         View titleView = toolbar.getChildAt(0);
-        if (Objects.nonNull(titleView) && titleView instanceof TextView) {
+        if (Utils.nonNull(titleView) && titleView instanceof TextView) {
             ViewGroup.LayoutParams layoutParams = titleView.getLayoutParams();
             layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
             ((TextView) titleView).setGravity(Gravity.CENTER_HORIZONTAL);

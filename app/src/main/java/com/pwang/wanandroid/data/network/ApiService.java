@@ -59,7 +59,7 @@ public interface ApiService {
      * http://www.wanandroid.com/article/list/0?cid=60
      * @return
      */
-    @GET("/article/list/{page}/json?cid={cid}")
+    @GET("/article/list/{page}/json")
     Observable<BaseResponse<ArticleList>> getSecondLevelKnowledgeHierarchy(@Path("page")int page, @Query("cid") int cid);
 
     /**
@@ -83,7 +83,7 @@ public interface ApiService {
      *  http://www.wanandroid.com/project/list/1/json?cid=294
      * @return
      */
-    @GET("/project/list/{page}/json?cid={cid}")
+    @GET("/project/list/{page}/json")
     Observable<BaseResponse<ArticleList>> getProjectClassifyList(@Path("page")int page, @Query("cid")int cid);
 
     /**
@@ -107,17 +107,13 @@ public interface ApiService {
 
 
     //<editor-fold desc="知识体系Api">
-
     //</editor-fold>
 
 
     //<editor-fold desc="导航Api">
-
     //</editor-fold>
 
-
     //<editor-fold desc="项目Api">
-
     //</editor-fold>
 
 }

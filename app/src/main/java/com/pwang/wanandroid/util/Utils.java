@@ -1,5 +1,7 @@
 package com.pwang.wanandroid.util;
 
+import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.Context;
 
 /**
@@ -13,6 +15,7 @@ import android.content.Context;
  */
 public final class Utils {
 
+    @SuppressLint("StaticFieldLeak")
     private static volatile Context sInstance;
 
     private Utils() {
@@ -24,7 +27,11 @@ public final class Utils {
      * @param context
      */
     public static void init(Context context) {
-        sInstance = Utils.requireNonNull(context, "context cannot be null");
+        if (context instanceof Application) {
+            sInstance = Utils.requireNonNull(context, "context cannot be null");
+        }else {
+            throw new RuntimeException("Context is not an instance of Application ");
+        }
     }
 
     /**
@@ -57,7 +64,7 @@ public final class Utils {
      * @param obj     the object reference to check for nullity
      * @param message detail message to be used in the event that a {@code
      *                NullPointerException} is thrown
-     * @param <T> the type of the reference
+     * @param <T>     the type of the reference
      * @return {@code obj} if not {@code null}
      * @throws NullPointerException if {@code obj} is {@code null}
      */
@@ -65,6 +72,16 @@ public final class Utils {
         if (obj == null)
             throw new NullPointerException(message);
         return obj;
+    }
+
+    /**
+     * 判断对象是否为空
+     *
+     * @param obj
+     * @return if true 对象为null else false
+     */
+    public static boolean nonNull(Object obj) {
+        return obj != null;
     }
 
 }
