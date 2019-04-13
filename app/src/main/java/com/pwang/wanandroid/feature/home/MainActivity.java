@@ -150,11 +150,11 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
+    public void onUserInteraction() {
+        super.onUserInteraction();
         if (!mSearchView.isIconified()) {
             mSearchView.onActionViewCollapsed();
         }
-        return super.dispatchTouchEvent(ev);
     }
 
     @SuppressLint("NewApi")
