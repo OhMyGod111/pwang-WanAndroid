@@ -1,6 +1,7 @@
 package com.pwang.wanandroid.feature.home;
 
 import android.annotation.SuppressLint;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
@@ -150,11 +151,21 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    public void onUserInteraction() {
-        super.onUserInteraction();
-        if (!mSearchView.isIconified()) {
-            mSearchView.onActionViewCollapsed();
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN){
+            int[] position = new int[2];
+            mSearchView.getLocationInWindow(position);
+            int left   = position[0];
+            int top    = position[1];
+            int right  = left + mSearchView.getWidth();
+            int bottom = top + mSearchView.getHeight();
+            Rect rect = new Rect(left, top, right, bottom);
+            boolean contains = rect.contains((int) ev.getX(), (int) ev.getY());
+            if (!mSearchView.isIconified() && !contains) {
+                mSearchView.onActionViewCollapsed();
+            }
         }
+        return super.dispatchTouchEvent(ev);
     }
 
     @SuppressLint("NewApi")
