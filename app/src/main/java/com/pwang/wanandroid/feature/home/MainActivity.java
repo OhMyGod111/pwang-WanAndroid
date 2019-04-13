@@ -16,11 +16,13 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.orhanobut.logger.Logger;
 import com.pwang.wanandroid.R;
 import com.pwang.wanandroid.base.BaseActivity;
 import com.pwang.wanandroid.feature.knowledge.KnowledgeFragment;
@@ -63,6 +65,7 @@ public class MainActivity extends BaseActivity {
     private Fragment mTargetFragment;
     // 如果存在 即是当前显示的Fragment
     private Fragment mCurrentFragment;
+    private SearchView mSearchView;
 
 
     @Override
@@ -141,9 +144,17 @@ public class MainActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_search_item, menu);
         MenuItem item = menu.findItem(R.id.item_search);
-        SearchView view = (SearchView) item.getActionView();
-        view.setQueryHint(getString(R.string.main_toolbar_search));
+        mSearchView = (SearchView) item.getActionView();
+        mSearchView.setQueryHint(getString(R.string.main_toolbar_search));
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (!mSearchView.isIconified()) {
+            mSearchView.onActionViewCollapsed();
+        }
+        return super.dispatchTouchEvent(ev);
     }
 
     @SuppressLint("NewApi")
