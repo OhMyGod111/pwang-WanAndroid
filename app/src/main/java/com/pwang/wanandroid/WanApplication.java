@@ -1,7 +1,9 @@
 package com.pwang.wanandroid;
 
+import android.content.ComponentCallbacks2;
 import android.os.StrictMode;
 
+import com.bumptech.glide.Glide;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.DiskLogAdapter;
 import com.orhanobut.logger.Logger;
@@ -32,6 +34,21 @@ public class WanApplication extends DaggerApplication {
 
         // 初始化操作
         init();
+    }
+
+    @Override
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+        if (level >= ComponentCallbacks2.TRIM_MEMORY_RUNNING_MODERATE){
+            Glide.get(this).clearMemory();
+        }
+        Glide.get(this).onTrimMemory(level);
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        Glide.get(this).clearMemory();
     }
 
     @Override
