@@ -23,12 +23,12 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.orhanobut.logger.Logger;
 import com.pwang.wanandroid.R;
 import com.pwang.wanandroid.base.BaseActivity;
 import com.pwang.wanandroid.feature.knowledge.KnowledgeFragment;
 import com.pwang.wanandroid.feature.navigation.NavigationFragment;
 import com.pwang.wanandroid.feature.project.ProjectFragment;
+import com.pwang.wanandroid.util.CrashUtils;
 import com.pwang.wanandroid.util.Utils;
 
 import javax.inject.Inject;
@@ -98,6 +98,13 @@ public class MainActivity extends BaseActivity {
             bottomNav.setSelectedItemId(DEFAULT_HOME_PAGE_FRAGMENT);
         }
         setupToolbar();
+
+        init();
+    }
+
+    private void init(){
+        // TODO: 2019/4/20 fix me
+        CrashUtils.init();
     }
 
     private void switchFragment(int itemId) {
