@@ -29,6 +29,8 @@ public final class Utils {
     @SuppressLint("StaticFieldLeak")
     private static Application sInstance;
     private static final ActivityLifecycleImpl ACTIVITY_LIFECYCLE = new ActivityLifecycleImpl();
+    private static final String PERMISSION_ACTIVITY_CLASS_NAME =
+            "com.pwang.wanandroid.util.PermissionUtils$PermissionActivity";
 
     private Utils() {
         throw new UnsupportedOperationException("u can't instantiate me...");
@@ -179,6 +181,7 @@ public final class Utils {
         }
 
         void addActivityToList(Activity activity){
+            if (PERMISSION_ACTIVITY_CLASS_NAME.equals(activity.getClass().getName())) return;
             if (mActivityList.contains(activity) && !mActivityList.getLast().equals(activity)) {
                 mActivityList.remove(activity);
                 mActivityList.addLast(activity);

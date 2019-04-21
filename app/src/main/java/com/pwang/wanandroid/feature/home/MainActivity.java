@@ -1,5 +1,6 @@
 package com.pwang.wanandroid.feature.home;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -25,11 +26,16 @@ import android.widget.TextView;
 
 import com.pwang.wanandroid.R;
 import com.pwang.wanandroid.base.BaseActivity;
+import com.pwang.wanandroid.constant.PermissionConstants;
 import com.pwang.wanandroid.feature.knowledge.KnowledgeFragment;
 import com.pwang.wanandroid.feature.navigation.NavigationFragment;
 import com.pwang.wanandroid.feature.project.ProjectFragment;
 import com.pwang.wanandroid.util.CrashUtils;
+import com.pwang.wanandroid.util.DialogHelper;
+import com.pwang.wanandroid.util.PermissionUtils;
 import com.pwang.wanandroid.util.Utils;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -102,9 +108,9 @@ public class MainActivity extends BaseActivity {
         init();
     }
 
-    private void init(){
-        // TODO: 2019/4/20 fix me
-        CrashUtils.init();
+    private void init() {
+        // FIXME: 2019/4/22 还是有问题
+        requestExternalStorage();
     }
 
     private void switchFragment(int itemId) {
@@ -237,5 +243,29 @@ public class MainActivity extends BaseActivity {
             drawerLayout.closeDrawers();
             return true;
         });
+    }
+
+    @SuppressLint("MissingPermission")
+    private void requestExternalStorage(){
+        if (!PermissionUtils.isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            PermissionUtils.permission(PermissionConstants.STORAGE).
+                    rationale(DialogHelper::showRationaleDialog).callback(new PermissionUtils.FullCallback() {
+                @Override
+                public void onGranted(List<String> permissionsGranted) {
+                    if (permissionsGranted.isEmpty()) CrashUtils.init();
+                }
+
+                @Override
+                public void onDenied(List<String> permissionsDeniedForever, List<String> permissionsDenied) {
+                    if (!permissionsDeniedForever.isEmpty()) {
+                        DialogHelper.showOpenAppSettingDialog();
+                        return;
+                    }
+                    requestExternalStorage();
+                }
+            }).request();
+        }else {
+            CrashUtils.init();
+        }
     }
 }
