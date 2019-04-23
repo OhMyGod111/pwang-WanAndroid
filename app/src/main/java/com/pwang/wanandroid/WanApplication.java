@@ -28,7 +28,7 @@ public class WanApplication extends DaggerApplication {
     @Override
     public void onCreate() {
         if (BuildConfig.DEBUG) {
-            setStrictMode();
+//            setStrictMode();
         }
         super.onCreate();
 
@@ -61,6 +61,7 @@ public class WanApplication extends DaggerApplication {
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                 .detectAll()
                 .penaltyLog()
+//                .penaltyDialog()
                 .build());
         // VM 策略
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()

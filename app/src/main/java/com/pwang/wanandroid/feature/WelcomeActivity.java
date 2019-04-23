@@ -1,10 +1,8 @@
 package com.pwang.wanandroid.feature;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.widget.TextView;
 
 import com.facebook.shimmer.Shimmer;
@@ -12,6 +10,7 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 import com.pwang.wanandroid.R;
 import com.pwang.wanandroid.base.BaseActivity;
 import com.pwang.wanandroid.feature.home.MainActivity;
+import com.pwang.wanandroid.util.ActivityUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,8 +51,6 @@ public class WelcomeActivity extends BaseActivity {
         downTimer = new MyCountDownTimer(5000, 1000);
         downTimer.setTextView(tvTime);
         downTimer.start();
-
-
     }
 
     @Override
@@ -66,16 +63,14 @@ public class WelcomeActivity extends BaseActivity {
         }
     }
 
-    private void gotoMainPage() {
-        Intent intent = new Intent();
-        intent.setClass(WelcomeActivity.this, MainActivity.class);
-        ActivityCompat.startActivity(WelcomeActivity.this, intent, null);
+    private void gotoMainActivity() {
+        ActivityUtils.startActivity(WelcomeActivity.this, MainActivity.class);
         finish();
     }
 
     @OnClick(R.id.tv_time)
     public void onViewClicked() {
-        gotoMainPage();
+        gotoMainActivity();
     }
 
     public static class MyCountDownTimer extends CountDownTimer {
@@ -103,7 +98,7 @@ public class WelcomeActivity extends BaseActivity {
         @Override
         public void onFinish() {
             WelcomeActivity activity = (WelcomeActivity) tvTime.getContext();
-            activity.gotoMainPage();
+            activity.gotoMainActivity();
         }
 
         public void setTextView(TextView tvTime) {

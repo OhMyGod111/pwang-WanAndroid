@@ -26,6 +26,6 @@
     <string name="tv_net_error">网络正在开小差！</string>
     <string name="btn_net_error_retry">请点击重试</string>
     <string name="tv_no_data_error">没有数据，不晓得数据去哪儿了！</string>
-    <string name="permission_rationale_message">是否重新获取权限</string>
-    <string name="permission_denied_forever_message">hehe</string>
+    <string name="permission_rationale_message">请放心，应用拿到权限不会做坏事，我们是一款良心App</string>
+    <string name="permission_denied_forever_message">为了保证您正常、安全的使用玩Android客户端，需要获取相关权限，请允许</string>
 </resources>

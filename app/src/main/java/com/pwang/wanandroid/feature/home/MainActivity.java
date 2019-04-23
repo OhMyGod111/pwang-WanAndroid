@@ -1,9 +1,10 @@
 package com.pwang.wanandroid.feature.home;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -108,9 +109,20 @@ public class MainActivity extends BaseActivity {
         init();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus){
+            requestExternalStorage();
+        }
+    }
+
     private void init() {
-        // FIXME: 2019/4/22 还是有问题
-        requestExternalStorage();
     }
 
     private void switchFragment(int itemId) {
@@ -247,21 +259,19 @@ public class MainActivity extends BaseActivity {
 
     @SuppressLint("MissingPermission")
     private void requestExternalStorage(){
-        if (!PermissionUtils.isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+        if (!PermissionUtils.isGranted(PermissionConstants.STORAGE)) {
             PermissionUtils.permission(PermissionConstants.STORAGE).
                     rationale(DialogHelper::showRationaleDialog).callback(new PermissionUtils.FullCallback() {
                 @Override
                 public void onGranted(List<String> permissionsGranted) {
-                    if (permissionsGranted.isEmpty()) CrashUtils.init();
+                    if (!permissionsGranted.isEmpty()) CrashUtils.init();
                 }
 
                 @Override
                 public void onDenied(List<String> permissionsDeniedForever, List<String> permissionsDenied) {
                     if (!permissionsDeniedForever.isEmpty()) {
                         DialogHelper.showOpenAppSettingDialog();
-                        return;
                     }
-                    requestExternalStorage();
                 }
             }).request();
         }else {

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.v7.app.AlertDialog;
 
 import com.pwang.wanandroid.R;
+import com.pwang.wanandroid.util.PermissionUtils.OnRationaleListener.ShouldRequest;
 
 /**
  * <pre>
@@ -16,7 +17,7 @@ import com.pwang.wanandroid.R;
  */
 public final class DialogHelper {
 
-    public static void showRationaleDialog(PermissionUtils.OnRationaleListener.ShouldRequest shouldRequest) {
+    public static void showRationaleDialog(ShouldRequest shouldRequest) {
         Activity topActivity = ActivityUtils.getTopActivity();
         if (topActivity == null || topActivity.isFinishing()) return;
         new AlertDialog.Builder(topActivity)
@@ -41,7 +42,7 @@ public final class DialogHelper {
                 .setMessage(R.string.permission_denied_forever_message)
                 .setPositiveButton(android.R.string.ok, (dialog, which) -> PermissionUtils.launchAppDetailsSettings())
                 .setNegativeButton(android.R.string.cancel, (dialog, which) -> {
-
+                    ActivityUtils.finishAllActivities();
                 })
                 .setCancelable(false)
                 .create()
