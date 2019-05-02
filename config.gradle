@@ -16,6 +16,11 @@ ext {
             gson              : '2.8.5',
             banner            : '1.4.10',
             glide             : '4.9.0',
+
+            agentweb          : '4.0.3-alpha@aar',
+            filechooser       : '4.0.3-alpha@aar',
+            agentweb_download : '4.0.3-alpha@aar',
+            download          : 'v4.0.3',
     ]
 
     android = [
@@ -66,6 +71,12 @@ ext {
 
             glide             : "com.github.bumptech.glide:glide:${lib_versions.glide}",
             glideCompiler     : "com.github.bumptech.glide:compiler:${lib_versions.glide}",
+
+            // AgentWeb
+            agentweb          : "com.just.agentweb:agentweb:${lib_versions.agentweb}",
+            filechooser       : "com.just.agentweb:filechooser:${lib_versions.filechooser}",
+            agentweb_download : "com.just.agentweb:download:${lib_versions.agentweb_download}",
+            download          : "com.github.Justson:Downloader:${lib_versions.download}",
 
     ]
 

@@ -64,4 +64,9 @@ dependencies {
     implementation rootProject.ext.dependencies.glide
     annotationProcessor rootProject.ext.dependencies.glideCompiler
 
+    // AgentWeb
+    implementation rootProject.ext.dependencies.agentweb// (必选)
+    implementation rootProject.ext.dependencies.filechooser// (可选)
+    implementation rootProject.ext.dependencies.agentweb_download// (可选)
+    implementation rootProject.ext.dependencies.download // (可选)
 }

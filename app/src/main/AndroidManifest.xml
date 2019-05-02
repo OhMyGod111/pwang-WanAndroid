@@ -18,7 +18,8 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:replace="android:allowBackup,icon,theme,label, android:supportsRtl">
         <activity
             android:name=".feature.WelcomeActivity"
             android:theme="@style/WelcomeAppTheme">
