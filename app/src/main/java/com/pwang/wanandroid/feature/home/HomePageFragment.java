@@ -2,6 +2,7 @@ package com.pwang.wanandroid.feature.home;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,12 +17,15 @@ import com.pwang.wanandroid.base.BaseFragment;
 import com.pwang.wanandroid.base.BaseRecyclerViewAdapter;
 import com.pwang.wanandroid.data.network.entity.ArticleDetail;
 import com.pwang.wanandroid.data.network.entity.Banner;
+import com.pwang.wanandroid.feature.browser.WebActivity;
+import com.pwang.wanandroid.util.ActivityUtils;
 import com.pwang.wanandroid.util.Utils;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -123,6 +127,14 @@ public class HomePageFragment extends BaseFragment<HomePagePresenter> implements
         Logger.d("adapter:" + adapter.getClass().getName() +
                 "view:" + view.getClass().getName() +
                 "position:" + position);
+        ArticleDetail data = (ArticleDetail) adapter.getDataItemByPosition(position);
+        if (data == null) {
+            return;
+        }
+        Intent intent = new Intent();
+        intent.putExtra("web_data", data);
+        intent.setClass(getActivity(), WebActivity.class);
+        ActivityUtils.startActivity(intent);
     };
 
     SwipeRefreshLayout.OnRefreshListener onRefreshListener = () -> {

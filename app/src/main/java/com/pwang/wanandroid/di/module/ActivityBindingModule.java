@@ -2,6 +2,7 @@ package com.pwang.wanandroid.di.module;
 
 import com.pwang.wanandroid.di.scoped.ActivityScoped;
 import com.pwang.wanandroid.feature.WelcomeActivity;
+import com.pwang.wanandroid.feature.browser.WebActivity;
 import com.pwang.wanandroid.feature.home.MainActivity;
 
 import dagger.Module;
@@ -26,4 +27,8 @@ public abstract class ActivityBindingModule {
     @ActivityScoped
     @ContributesAndroidInjector
     abstract WelcomeActivity welcomeActivity();
+
+    @ActivityScoped
+    @ContributesAndroidInjector
+    abstract WebActivity webActivity();
 }
