@@ -71,7 +71,11 @@ public class HomePageFragment extends BaseFragment<HomePagePresenter> implements
     @Override
     public void showArticles(List<ArticleDetail> details) {
         if (details == null) return;
-        mAdapter.addData(details);
+        if (mAdapter != null) {
+            mAdapter.setLoadingStatus(BaseRecyclerViewAdapter.AbstractLoadingView.LOADING_COMPLETE);
+            mAdapter.addData(details);
+
+        }
     }
 
     @Override
@@ -138,7 +142,6 @@ public class HomePageFragment extends BaseFragment<HomePagePresenter> implements
 
     SwipeRefreshLayout.OnRefreshListener onRefreshListener = () -> {
 //        mSwipeRefreshLayout.setRefreshing(false);
-        mAdapter.setLoadingStatus(BaseRecyclerViewAdapter.AbstractLoadingView.LOADING);
         mPresenter.loadHomePageData(false);
     };
 
@@ -148,6 +151,7 @@ public class HomePageFragment extends BaseFragment<HomePagePresenter> implements
     };
 
     BaseRecyclerViewAdapter.OnLoadMoreListener onLoadMoreListener = () -> {
+        mAdapter.setLoadingStatus(BaseRecyclerViewAdapter.AbstractLoadingView.LOADING);
         mPresenter.loadHomePageData(true);
     };
 

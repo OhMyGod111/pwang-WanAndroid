@@ -332,7 +332,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
     public void setLoadingStatus(@LoadStatus int status) {
         this.mLoadingView.setLoadStatus(status);
 //        notifyDataSetChanged();
-        notifyItemChanged(getItemCount() + 1);
+        notifyItemChanged(getItemCount() - 1);
     }
 
     private int getLayoutId(int viewType) {
