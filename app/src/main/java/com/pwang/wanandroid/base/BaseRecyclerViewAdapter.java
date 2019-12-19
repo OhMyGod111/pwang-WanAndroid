@@ -11,6 +11,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
@@ -96,21 +97,26 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
         if (mLayoutInflater == null)
             this.mLayoutInflater = LayoutInflater.from(viewGroup.getContext());
         View view;
+        VH vh;
         switch (viewType) {
             case HEADER_VIEW:
                 view = mHeaderLayout;
-                return new VH(view);
+                vh = new VH(view);
+                break;
             case FOOTER_VIEW:
                 view = mFooterLayout;
-                return new VH(view);
+                vh = new VH(view);
+                break;
             case LOADING_VIEW:
-                return new VH(inflate(mLoadingView.getLoadingViewLayout(), viewGroup));
+                vh = new VH(inflate(mLoadingView.getLoadingViewLayout(), viewGroup));
+                break;
             case EMPTY_VIEW_TYPE:
                 // TODO: 2019/3/24  EMPTY_VIEW 目前不做处理，也不添加自定义的 EMPTY_VIEW
-                return new VH(new View(viewGroup.getContext()));
+                vh = new VH(new View(viewGroup.getContext()));
+                break;
             default:
                 view = inflate(getLayoutId(viewType), viewGroup);
-                VH vh = new VH(view);
+                vh = new VH(view);
                 if (mOnItemClickListener != null) {
                     view.setOnClickListener(v -> mOnItemClickListener.onItemClick(
                             BaseRecyclerViewAdapter.this,
@@ -122,8 +128,10 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
                                 view, vh.getLayoutPosition() - getHeaderLayoutCount()));
                     }
                 }
-                return vh;
+                break;
         }
+        vh.setAdapter(this);
+        return vh;
     }
 
     private View inflate(@LayoutRes int resource, ViewGroup root) {
@@ -135,9 +143,9 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
         int viewType = vh.getItemViewType();
         switch (viewType) {
             case LOADING_VIEW:
-                if (position == mData.size() + 1)
-                    mLoadingView.setLoadStatus(AbstractLoadingView.LOADING);
-                else mLoadingView.setLoadStatus(AbstractLoadingView.LOADING_COMPLETE);
+//                if (position == mData.size() + 1)
+//                    mLoadingView.setLoadStatus(AbstractLoadingView.LOADING);
+//                else mLoadingView.setLoadStatus(AbstractLoadingView.LOADING_COMPLETE);
                 mLoadingView.convert(vh);
                 break;
             case HEADER_VIEW:
@@ -216,11 +224,14 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                int loadingStatus = mLoadingView.getLoadingStatus();
-                if (newState == RecyclerView.SCROLL_STATE_IDLE &&
-                        loadingStatus == AbstractLoadingView.LOADING){
-                    if (mOnLoadMoreListener != null){
-                        mOnLoadMoreListener.onLoadMoreRequested();
+
+                RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+                if (layoutManager instanceof LinearLayoutManager){
+                    int visibleItemPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE && visibleItemPosition + 1 == getItemCount()){
+                        if (mOnLoadMoreListener != null){
+                            mOnLoadMoreListener.onLoadMoreRequested();
+                        }
                     }
                 }
             }
@@ -320,7 +331,8 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
 
     public void setLoadingStatus(@LoadStatus int status) {
         this.mLoadingView.setLoadStatus(status);
-        notifyDataSetChanged();
+//        notifyDataSetChanged();
+        notifyItemChanged(getItemCount() + 1);
     }
 
     private int getLayoutId(int viewType) {

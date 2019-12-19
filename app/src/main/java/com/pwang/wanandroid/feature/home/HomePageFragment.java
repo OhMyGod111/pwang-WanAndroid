@@ -25,7 +25,6 @@ import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +41,7 @@ import butterknife.BindView;
  *     version: 1.0
  * </pre>
  */
-public class HomePageFragment extends BaseFragment<HomePagePresenter> implements HomePageContract.View{
+public class HomePageFragment extends BaseFragment<HomePagePresenter> implements HomePageContract.View {
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
@@ -109,7 +108,7 @@ public class HomePageFragment extends BaseFragment<HomePagePresenter> implements
         mAdapter.setOnItemClickListener(onItemClickListener);
         mAdapter.setOnLoadMoreListener(onLoadMoreListener);
 
-        @SuppressLint("InflateParams") LinearLayout linearLayout  = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.home_page_banner, null);
+        @SuppressLint("InflateParams") LinearLayout linearLayout = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.home_page_banner, null);
         this.mBanner = linearLayout.findViewById(R.id.banner);
         linearLayout.removeView(mBanner);
         mAdapter.addHeaderView(mBanner);
@@ -139,6 +138,7 @@ public class HomePageFragment extends BaseFragment<HomePagePresenter> implements
 
     SwipeRefreshLayout.OnRefreshListener onRefreshListener = () -> {
 //        mSwipeRefreshLayout.setRefreshing(false);
+        mAdapter.setLoadingStatus(BaseRecyclerViewAdapter.AbstractLoadingView.LOADING);
         mPresenter.loadHomePageData(false);
     };
 

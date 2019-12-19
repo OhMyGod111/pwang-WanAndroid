@@ -44,6 +44,7 @@ public class KnowledgeFragment extends BaseFragment <KnowledgePresenter> impleme
         super.onResume();
         if (getView() == null) return;
         ViewStub viewStub = getView().findViewById(R.id.vb_fail_page);
+        if (viewStub == null) return;
         Logger.d("viewStub:" + viewStub.getClass().getName()
                 + " ### getView():" +getView().getClass().getName()
                 + " ### threadName:" + Thread.currentThread().getName());

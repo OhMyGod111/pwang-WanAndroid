@@ -56,4 +56,9 @@
         <item name="android:windowDisablePreview">true</item>
     </style>
 
+    <!-- 设置Toolbar标题字体的大小 -->
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">@dimen/sp16</item>
+    </style>
+
 </resources>
