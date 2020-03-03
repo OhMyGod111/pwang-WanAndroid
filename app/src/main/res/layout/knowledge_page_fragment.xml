@@ -13,7 +13,7 @@
         android:layout_marginEnd="8dp"
         android:layout_gravity="center"
         android:text="KnowledgeFragment"
-        android:textSize="24sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
