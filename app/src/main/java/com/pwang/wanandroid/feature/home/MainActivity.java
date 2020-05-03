@@ -178,7 +178,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (ev.getAction() == MotionEvent.ACTION_DOWN){
-            if (!mSearchView.isIconified()) {
+            if (mSearchView != null && !mSearchView.isIconified()) {
                 int[] position = new int[2];
                 mSearchView.getLocationInWindow(position);
                 int left = position[0];
